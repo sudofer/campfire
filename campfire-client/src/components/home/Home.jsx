@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Button } from "@material-ui/core";
 export default function Home() {
-  return <h1>hello</h1>;
+  return <Button color="secondary">Hello World</Button>;
 }
