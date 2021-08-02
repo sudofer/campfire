@@ -16,9 +16,9 @@ export default function App() {
     <Router>
       <div className="App">
         <Navbar />
-        <Route path="/home">
-          <Home />
-        </Route>     
+        <Route exact path="/">
+          <Home/>
+        </Route>
         <Route path="/about">
           <ChatBoxNav/>
         </Route>
