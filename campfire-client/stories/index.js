@@ -1,9 +1,14 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
+import { muiTheme } from "storybook-addon-material-ui";
 import Home from "components/home/Home";
+import theme from "../src/theme";
+import ChatBoxNav from "../src/components/room/sidebar/chatBoxNav/ChatBoxNav";
 
 storiesOf("Home", module)
-  .addParameters({
-    backgrounds: [{ name: "dark", value: "#222f3e", default: true }],
-  })
+  .addDecorator(muiTheme([theme]))
   .add("Home", () => <Home />);
+
+storiesOf("ChatBoxNav", module)
+  .addDecorator(muiTheme([theme]))
+  .add("ChatBoxNav", () => <ChatBoxNav />);
