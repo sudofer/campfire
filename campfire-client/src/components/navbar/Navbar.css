@@ -1,0 +1,28 @@
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 70px;
+  background-color: lightskyblue;
+  font-size: 30px;
+  font-family: "Helvetica Neue";
+}
+
+.logo {
+  margin-left: 10px;
+}
+
+.nav-right {
+  display: flex;
+  margin-right: 10px;
+  align-items: center;
+}
+
+.nav-right div {
+  margin: 0px 10px 0px 10px;
+}
