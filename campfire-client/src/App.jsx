@@ -13,7 +13,6 @@ import {
 export default function App() {
 
   return (
-    <>
     <Router>
       <div className="App">
         <Navbar />
@@ -24,7 +23,6 @@ export default function App() {
           <ChatBoxNav/>
         </Route>
       </div>
-    </Router>  
-    </>
+    </Router>
   );
 }
