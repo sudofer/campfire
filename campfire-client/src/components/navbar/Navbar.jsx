@@ -9,7 +9,7 @@ export default function Navbar() {
         <div>CAMPFIRE</div>
       </div>
       <div className="nav-right">
-        <Link to="/">
+        <Link to="/home">
           <div>Home</div>
         </Link>
         <Link to="/about">
