@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { io } from "socket.io-client";
+import Home from "../src/components/home/Home";
+import Navbar from "./components/navbar/Navbar";
 
-
-// import {
-//   BrowserRouter as Router,
-//   Link,
-//   Route,
-//   Switch
-// } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Link,
+  Route,
+  Switch
+} from 'react-router-dom';
 
 class App extends Component {
   state = {users: []}
@@ -39,6 +40,17 @@ class App extends Component {
     console.log(`${JSON.stringify(this.state)}`)
     return (
       <>
+      <Router>
+        <div className="App">
+          <Navbar />
+          <Route path="/">
+            <Home />
+          </Route>
+          <Route path="/about">
+            <h1>About</h1>
+          </Route>
+        </div>
+      </Router>
       <div className="App">
         <h1>Users</h1>
         {this.state.users.map(user =>
