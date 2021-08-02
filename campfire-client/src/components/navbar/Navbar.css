@@ -1,6 +1,7 @@
 a {
   text-decoration: none;
   color: black;
+  margin: 0px 10px 0px 10px;
 }
 
 .navbar {
@@ -21,8 +22,4 @@ a {
   display: flex;
   margin-right: 10px;
   align-items: center;
-}
-
-.nav-right div {
-  margin: 0px 10px 0px 10px;
 }
