@@ -1,6 +1,6 @@
 import React from "react";
 import { Paper, Tabs, Tab } from "@material-ui/core";
-export default function ChatBoxNav() {
+export default function SideBarNav() {
   const [value, setValue] = React.useState(2);
 
   const handleChange = (event, newValue) => {
