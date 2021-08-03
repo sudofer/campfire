@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 // import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@material-ui/core";
 
+
 let socket;
 
-
 export default function Home() {
-
   // const [users, setUsers] = useState([]);
   const [url, setUrl] = useState("");
   const [name, setName] = useState("");
@@ -52,6 +51,7 @@ export default function Home() {
 
   return (
     <>
+
     {/* <h1>Users</h1>
     {users.map(user =>
       <div key={user.id}>{user.username}</div>
@@ -143,6 +143,3 @@ export default function Home() {
   </>
   )
 }
-
-
-

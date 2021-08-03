@@ -26,6 +26,10 @@ io.on("connection", (socket) => {
     socket.join(url);
     io.to(url).emit(`${name} has joinedRoom`);
   });
+
+  socket.on("NEW_PLAY_LIST_ITEM", (item) => {
+    io.to(roomID).emit(item);
+  });
 });
 
 server.listen(PORT, () => {
