@@ -1,7 +1,7 @@
 import React from "react";
 import Home from "../src/components/home/Home";
 import Navbar from "./components/navbar/Navbar";
-import SideBarNav from "./components/room/sidebar/SideBarNav/SideBarNav";
+import About from "./components/about/About";
 
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 
@@ -14,7 +14,7 @@ export default function App() {
           <Home />
         </Route>
         <Route path="/about">
-          <SideBarNav />
+          <About />
         </Route>
       </div>
     </Router>
