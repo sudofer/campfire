@@ -4,7 +4,6 @@ import { io } from "socket.io-client";
 import { useHistory } from 'react-router-dom';
 import { Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@material-ui/core";
 
-
 let socket;
 
 export default function Home() {
