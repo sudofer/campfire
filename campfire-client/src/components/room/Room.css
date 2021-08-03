@@ -2,21 +2,21 @@
   display: flex;
   flex-direction: row;
   align-items: flex-start;
+  width: 100%;
 }
 
 .videoPlayer {
   display: flex;
   width: 100%;
+  margin-right: 3em;
 }
 
 img {
   width: 100%;
   height: 100%;
-
-
 }
 
 .SideBarNav {
- width: 20%;
+ width: 100%;
 }
 
