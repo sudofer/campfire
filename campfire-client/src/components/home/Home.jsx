@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { io } from "socket.io-client";
-import axios from 'axios';
+// import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@material-ui/core";
 
@@ -9,7 +9,7 @@ let socket;
 
 export default function Home() {
 
-  const [users, setUsers] = useState([]);
+  // const [users, setUsers] = useState([]);
   const [url, setUrl] = useState("");
   const [name, setName] = useState("");
   const [openType, setOpenType] = useState("");
@@ -17,12 +17,12 @@ export default function Home() {
   const history = useHistory();
 
   useEffect(() => {
-    axios.get('http://localhost:3002/users')
-    .then(users => setUsers([...users.data ]));
+    // axios.get('http://localhost:3002/users')
+    // .then(users => setUsers([...users.data ]));
 
     socket = io('ws://localhost:3002');
     socket.on('joinedRoom', () => {
-    console.log("successfully joined room")
+      console.log("successfully joined room")
     })
   }, [])
 
@@ -45,17 +45,17 @@ export default function Home() {
 
   const handleSubmit = () => {
 
-    socket.emit("createRoom", {url})
-    history.push('/room');
+    socket.emit("createRoom", { name, url });
+    history.push(`/room?name=${name}&url=${url}`);
     handleClose();
   }
 
   return (
     <>
-    <h1>Users</h1>
+    {/* <h1>Users</h1>
     {users.map(user =>
       <div key={user.id}>{user.username}</div>
-    )}
+    )} */}
 
     {/* Create Room button */}
     <div className="create-room">
