@@ -1,34 +1,45 @@
 import React from "react";
 import SideBarNav from "./sidebar/SideBarNav/SideBarNav";
-import {Container, Box} from '@material-ui/core'; // this must be imported last
-import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
-import youtubeSS from '.../docs/yt_image.png';
+// import { sizing } from '@material-ui/system';
+// import Container from '@material-ui/core/Container';
+import './Room.css';
 
-export default function Room() {
+export default function App() {
+  // const useStyles = makeStyles(theme => ({
+  //   container: {
+  //     height: '100%',
+  //     width: '100%',
+  //     display: 'flex',
+  //     flexDirection: 'row',
+  //     alignItems: 'flex-start',
+  //     border: '1px solid black',
+  //     borderRadius: '5px',
+  //     textAlign: 'center',
+  //   },
+  //   videoPlayer: {
+  //     width: '70%',
+  //   },
+  //   sideBarNav: {
+  //     width: '30%',
+  //   },
+  //   img: {
+  //     height: '65%',
+  //     width: '65%',
+  //   }
+  // }));
+
+  // const classes = useStyles();
   return (
     <>
-    <Container>
-
-    {/* <ThemeProvider theme={theme}> */}
-    <Box
-      color="primary.main"
-      bgcolor="background.paper"
-      fontFamily="h6.fontFamily"
-      fontSize={{ xs: 'h6.fontSize', sm: 'h4.fontSize', md: 'h3.fontSize' }}
-      p={{ xs: 2, sm: 3, md: 4 }}
-    >      
-
-    <Box>
-    <img src={youtubeSS} alt="youtube screenshot"/>  
-    </Box> 
-
-    <Box>
-      <SideBarNav/>
-    </Box>
-   
-    </Box>
-    {/* </ThemeProvider> */}
-    </Container>
+    <div class="container">
+        <div class="video-player">
+          <img src="https://github.com/htkim94/campfire/blob/main/campfire-client/public/docs/yt_image.png?raw=true" alt="youtube screenshot"/>  
+        </div>
+        
+        <div class="sideBarNav">
+          <SideBarNav/>
+        </div>
+    </div>
     </>
-  );
-}
+    );
+  }
