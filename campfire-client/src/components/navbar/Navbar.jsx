@@ -10,9 +10,9 @@ export default function Navbar() {
       </div>
       <div className="nav-right">
         <Link to="/">Home</Link>
-        <Link to="/about">
-          <div>About</div>
-        </Link>
+        <Link to="/about">About</Link>
+        <Link to="/room">Room</Link>
+
       </div>
     </nav>
   );
