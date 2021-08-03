@@ -21,10 +21,10 @@ io.on("connection", (socket) => {
   console.log("back end connected");
   socket.send("hello");
 
-  socket.on("createRoom", ({ roomID }) => {
-    console.log(roomID);
-    socket.join(roomID);
-    io.to(roomID).emit("joinedRoom");
+  socket.on("createRoom", ({ url, name }) => {
+    console.log(url, name);
+    socket.join(url);
+    io.to(url).emit(`${name} has joinedRoom`);
   });
 
   socket.on("NEW_PLAY_LIST_ITEM", (item) => {

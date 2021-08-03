@@ -9,7 +9,7 @@ import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 export default function App() {
   return (
     <>
-    <Container>
+    {/* <Container> */}
 
     <Router>
       <div className="App">
@@ -27,7 +27,7 @@ export default function App() {
     </Router>
 
 
-    </Container>
+    {/* </Container> */}
     </>
   );
 }
