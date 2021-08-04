@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
-import MessageInput from './MessageInput'
-import MessageList from './MessageList'
-import './Message.css'
+import MessageInput from "./MessageInput";
+import MessageList from "./MessageList";
+import "./Message.css";
 
 let socket;
 
@@ -13,16 +13,16 @@ export default function Chatbox() {
   //   setValue(newValue);
   // };
 
-  const [name, setName] = useState('');
-  const [url, setURL] = useState('');
+  const [name, setName] = useState("");
+  const [url, setURL] = useState("");
   const [message, setMessage] = useState([]);
   const [messages, setMessages] = useState([]);
-  const ENDPOINT = 'ws://localhost:3002';
+  const ENDPOINT = "ws://localhost:3002";
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const name = urlParams.get('name');
-    const url = urlParams.get('url');
+    const name = urlParams.get("name");
+    const url = urlParams.get("url");
 
     // using dedicated chat socket temporarily - need to replace with room socket
     socket = io(ENDPOINT);
@@ -30,45 +30,41 @@ export default function Chatbox() {
     setName(name);
     setURL(url);
 
-    socket.emit("createRoom", { name, url }, ({ error }) => {
+    socket.emit("createRoom", { name, url }, ({ error }) => {});
 
-    })
-
-    return() => {
-      socket.emit('disconnect');
+    return () => {
+      socket.disconnect();
       socket.off();
-    }
-  }, [ENDPOINT, window.location.search])
+    };
+  }, [ENDPOINT, window.location.search]);
 
   useEffect(() => {
-    console.log(`client side: ${socket.id}`)
-    socket.on('message', (message) => {
-      setMessages([...messages, message])
-    })
-  }, [messages])
+    console.log(`client side: ${socket.id}`);
+    socket.on("message", (message) => {
+      setMessages([...messages, message]);
+    });
+  }, [messages]);
 
   const sendMessage = (event) => {
     event.preventDefault();
 
-    if(message) {
-      socket.emit('sendMessage', message, () => setMessage(''));
+    if (message) {
+      socket.emit("sendMessage", message, () => setMessage(""));
     }
-  } 
+  };
 
-  console.log(message, messages)
+  console.log(message, messages);
 
   return (
-  <div className="outerContainer">
-    <div className="insideContainer">
-      <MessageList 
-        messages={messages}
-        name={name}
-      />
-      <MessageInput 
-        message={message}
-        setMessage={setMessage}
-        sendMessage={sendMessage}/>
+    <div className="outerContainer">
+      <div className="insideContainer">
+        <MessageList messages={messages} name={name} />
+        <MessageInput
+          message={message}
+          setMessage={setMessage}
+          sendMessage={sendMessage}
+        />
+      </div>
     </div>
-  </div>
-  )
+  );
 }
