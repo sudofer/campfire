@@ -14,7 +14,7 @@ export default function Chatbox() {
   const [url, setURL] = useState('');
   const [message, setMessage] = useState([]);
   const [messages, setMessages] = useState([]);
-  const ENDPOINT = 'localhost:3005';
+  const ENDPOINT = 'ws://localhost:3002';
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -23,23 +23,23 @@ export default function Chatbox() {
 
     socket = io(ENDPOINT);
 
-    setName(name)
-    setURL(url)
+    setName(name);
+    setURL(url);
 
-    socket.emit('createRoom', { name, url }, ({ error }) => {
-      
+    socket.emit("createRoom", { name, url }, ({ error }) => {
+
     })
 
     return() => {
       socket.emit('disconnect');
-
       socket.off();
     }
   }, [ENDPOINT, window.location.search])
 
   useEffect(() => {
+    console.log(`client side: ${socket.id}`)
     socket.on('message', (message) => {
-      setMessages(...messages, message)
+      setMessages([...messages, message])
     })
   }, [messages])
 
@@ -47,7 +47,7 @@ export default function Chatbox() {
     event.preventDefault();
 
     if(message) {
-      socket.emit('sendMessage', message, () => setMessage(''))''
+      socket.emit('sendMessage', message, () => setMessage(''));
     }
   } 
 
