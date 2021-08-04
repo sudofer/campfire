@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
+import MessageInput from './MessageInput'
+import MessageList from './MessageList'
+import './Message.css'
 
 let socket;
 
@@ -21,6 +24,7 @@ export default function Chatbox() {
     const name = urlParams.get('name');
     const url = urlParams.get('url');
 
+    // using dedicated chat socket temporarily - need to replace with room socket
     socket = io(ENDPOINT);
 
     setName(name);
@@ -55,12 +59,15 @@ export default function Chatbox() {
 
   return (
   <div className="outerContainer">
-    <div className="container">
-    <input 
-      value={message} 
-      onChange={(event) => setMessage(event.target.value)}
-      onKeyPress={(event) => event.key === 'Enter' ? sendMessage(event) : null}
-    />
+    <div className="insideContainer">
+      <MessageList 
+        messages={messages}
+        name={name}
+      />
+      <MessageInput 
+        message={message}
+        setMessage={setMessage}
+        sendMessage={sendMessage}/>
     </div>
   </div>
   )
