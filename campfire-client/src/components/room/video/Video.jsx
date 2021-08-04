@@ -20,6 +20,7 @@ export default function Video() {
     playerVars: {
       // https://developers.google.com/youtube/player_parameters
       autoplay: 1,
+      start: 60,
     },
   };
 
@@ -31,8 +32,8 @@ export default function Video() {
         <YouTube
           videoId={videoCode}
           opts={opts}
-          onStateChange={(e) => checkElapsedTime(e)}
           onPause={() => console.log("pause")}
+          onStateChange={(e) => console.log(e.target.getCurrentTime())}
         />{" "}
       </div>
     </>

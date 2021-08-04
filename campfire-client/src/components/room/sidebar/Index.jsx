@@ -4,8 +4,19 @@ import SearchBox from "./searchbox";
 import Chatbox from "./chatbox";
 import PlaylistBox from "./playlistbox";
 export default function Sidebar(props) {
-  const { addPlayListItem, name, message, messages, setMessage, sendMessage } =
-    props;
+  const {
+    addPlayListItem,
+    name,
+    message,
+    messages,
+    setMessage,
+    sendMessage,
+    results,
+    searchTerm,
+    setSearchTerm,
+    submitPlayListItem,
+  } = props;
+
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -25,7 +36,15 @@ export default function Sidebar(props) {
         />
       )}
       {value === 1 && <PlaylistBox />}
-      {value === 2 && <SearchBox addPlayListItem={addPlayListItem} />}
+      {value === 2 && (
+        <SearchBox
+          addPlayListItem={addPlayListItem}
+          results={results}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          submitPlayListItem={submitPlayListItem}
+        />
+      )}
     </>
   );
 }
