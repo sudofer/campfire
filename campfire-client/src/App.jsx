@@ -9,7 +9,9 @@ import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 export default function App() {
   return (
     <>
-  
+
+    {/* <Container> */}
+
     <Router>
       <div className="App">
         <Navbar />
@@ -24,6 +26,8 @@ export default function App() {
         </Route>
       </div>
     </Router>
+
+    {/* </Container> */}
 
     </>
   );
