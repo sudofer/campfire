@@ -20,26 +20,25 @@ const io = require("socket.io")(server, {
 });
 
 io.on("connection", (socket) => {
-  console.log("user connected!");
-
-  socket.on("createRoom", ({ url, name }, callback) => {
+  console.log(`socket connection alive on id ${socket.id}`)
+  socket.on("createRoom", ({ name, url }, callback) => {
+    console.log(`user id ${socket.id} joined room ${url}!`);
     const { error, user } = addUser({ id: socket.id, name, url });
 
     if(error) return callback(error);
 
-    socket.emit('message', { user: 'admin', text: `${user.name}, welcome to the room ${user.room}!` })
-    socket.broadcast.to(user.room).emit('message', { user: 'admin', text: `${user.name} has joined!` })
+    console.log(`about to emit message to ${socket.id}`)
+    socket.emit('message', { user: 'admin', text: `${user.name}, welcome to the room ${user.url}!` })
+    socket.broadcast.to(user.url).emit('message', { user: 'admin', text: `${user.name} has joined!` })
 
-    socket.join(user.room);
+    socket.join(user.url);
 
-    callback();
+    // callback();
   });
 
   socket.on('sendMessage', (message, callback) => {
     const user = getUser(socket.id);
-
-    io.to(user.room).emit('message', { user: user.name, text: message});
-
+    io.to(user.url).emit('message', { user: user.name, text: message});
     callback();
   })
 
@@ -49,7 +48,7 @@ io.on("connection", (socket) => {
   })
 
   socket.on("NEW_PLAY_LIST_ITEM", (item) => {
-    io.to(roomID).emit(item);
+    io.to(user.url).emit(item);
 
   });
 });
