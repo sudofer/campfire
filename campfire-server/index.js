@@ -1,10 +1,5 @@
 const express = require("express");
-// const users = require("./routes/users");
-const cors = require("cors");
-const socketio = require("socket.io");
 const app = express();
-app.use(cors());
-// app.use("/users", users);
 
 const { addUser, removeUser, getUser, getUserInRoom, getUsersInRoom} = require('./users');
 
@@ -45,8 +40,7 @@ io.on("connection", (socket) => {
     callback();
   })
 
-  
-  socket.on("disconnect", () => {
+  socket.on("disconnect_user", () => {
     console.log("user has disconnected!!")
     const user = removeUser(socket.id)
 
@@ -54,6 +48,11 @@ io.on("connection", (socket) => {
       io.to(user.room).emit('message', { user: 'admin', text: `${user} has left the room.`})
     }
   })
+
+  
+  // socket.on("disconnect", () => {
+  //   console.log("user has disconnected!!")
+  // })
 
   socket.on("NEW_PLAY_LIST_ITEM", (item) => {
     io.to(user.url).emit(item);

@@ -1,10 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { io } from "socket.io-client";
-// import axios from 'axios';
+import React, { useState } from "react";
 import { useHistory } from 'react-router-dom';
 import { Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@material-ui/core";
-
-let socket;
 
 export default function Home() {
   const [url, setUrl] = useState("");
@@ -31,10 +27,6 @@ export default function Home() {
   }
 
   const handleSubmit = () => {
-    
-    // room socket -- should be the only socket connection
-    socket = io('ws://localhost:3002');
-    // socket.emit("createRoom", { name, url });
     history.push(`/room?name=${name}&url=${url}`);
     handleClose();
   }
