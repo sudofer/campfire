@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 // import axios from "axios";
-import SideBarNav from "./sidebar";
+// import SideBarNav from "./sidebar";
+import Sidebar from "./sidebar";
 import { io } from "socket.io-client";
 // import { sizing } from '@material-ui/system';
 // import Container from '@material-ui/core/Container';
@@ -34,10 +35,6 @@ export default function Room() {
   // const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    // axios
-    //   .get("http://localhost:3002/users")
-    //   .then((users) => setUsers([...users.data]));
-
     socket = io("ws://localhost:3002");
     socket.on("joinedRoom", () => {
       console.log("successfully joined room");
@@ -59,7 +56,7 @@ export default function Room() {
         </div>
 
         <div className="sideBarNav">
-          <SideBarNav addPlayListItem={addPlayListItem} />
+          <Sidebar addPlayListItem={addPlayListItem} />
         </div>
       </div>
     </>

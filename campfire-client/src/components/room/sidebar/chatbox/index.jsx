@@ -7,11 +7,6 @@ import './Message.css'
 let socket;
 
 export default function Chatbox() {
-  // const [value, setValue] = React.useState();
-
-  // const handleChange = (event, newValue) => {
-  //   setValue(newValue);
-  // };
 
   const [name, setName] = useState('');
   const [url, setURL] = useState('');

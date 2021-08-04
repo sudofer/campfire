@@ -4,17 +4,18 @@ import SearchBox from "./searchbox";
 import Chatbox from "./chatbox";
 import PlaylistBox from "./playlistbox";
 export default function Sidebar({ addPlayListItem }) {
-  const [sideBarPos, setSideBarPos] = useState(0);
-  const onSideBarChange = (pos) => {
-    setSideBarPos(pos);
+  const [value, setValue] = useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
   };
 
   return (
     <>
-      <SideBarNav onSideBarChange={onSideBarChange} />
-      {sideBarPos === 0 && <Chatbox />}
-      {sideBarPos === 1 && <PlaylistBox />}
-      {sideBarPos === 2 && <SearchBox addPlayListItem={addPlayListItem} />}
+      <SideBarNav value={value} handleChange={handleChange} />
+      {value === 0 && <Chatbox />}
+      {value === 1 && <PlaylistBox />}
+      {value === 2 && <SearchBox addPlayListItem={addPlayListItem} />}
     </>
   );
 }
