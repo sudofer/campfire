@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 // import axios from "axios";
-import SideBarNav from "./sidebar";
+import Sidebar from "./sidebar";
 import { io } from "socket.io-client";
 // import { sizing } from '@material-ui/system';
 // import Container from '@material-ui/core/Container';
@@ -31,18 +31,50 @@ export default function Room() {
   // }));
 
   // const classes = useStyles();
-  // const [users, setUsers] = useState([]);
+
+  const [name, setName] = useState('');
+  const [url, setURL] = useState('');
+  const [message, setMessage] = useState([]);
+  const [messages, setMessages] = useState([]);
+  const ENDPOINT = 'ws://localhost:3002';
 
   useEffect(() => {
-    // axios
-    //   .get("http://localhost:3002/users")
-    //   .then((users) => setUsers([...users.data]));
 
-    socket = io("ws://localhost:3002");
-    socket.on("joinedRoom", () => {
-      console.log("successfully joined room");
-    });
-  }, []);
+    const urlParams = new URLSearchParams(window.location.search);
+    const name = urlParams.get('name');
+    const roomUrl = urlParams.get('url');
+
+    socket = io(ENDPOINT);
+
+    setName(name);
+    setURL(roomUrl);
+
+    socket.emit("createRoom", { name, url }, ({ error }) => {
+
+    })
+
+    return() => {
+      socket.emit('disconnect');
+      socket.off();
+    }
+  }, [ENDPOINT, window.location.search]);
+
+  useEffect(() => {
+    console.log(`client side: ${socket.id}`)
+    socket.on('message', (message) => {
+      setMessages([...messages, message])
+    })
+  }, [messages])
+
+  const sendMessage = (event) => {
+    event.preventDefault();
+
+    if(message) {
+      socket.emit('sendMessage', message, () => setMessage(''));
+    }
+  } 
+
+  console.log(message, messages)
 
   const addPlayListItem = (item) => {
     socket.emit("NEW_PLAY_LIST_ITEM", item);
@@ -59,7 +91,14 @@ export default function Room() {
         </div>
 
         <div className="sideBarNav">
-          <SideBarNav addPlayListItem={addPlayListItem} />
+          <Sidebar 
+            addPlayListItem={addPlayListItem} 
+            name={name}
+            message={message}
+            messages={messages}
+            setMessage={setMessage}
+            sendMessage={sendMessage}
+          />
         </div>
       </div>
     </>

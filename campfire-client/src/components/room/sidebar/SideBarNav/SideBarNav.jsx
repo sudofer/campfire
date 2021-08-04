@@ -1,12 +1,6 @@
 import React from "react";
-import { Paper, Tabs, Tab, TabContext } from "@material-ui/core";
-export default function SideBarNav({ onSideBarChange }) {
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-    onSideBarChange(newValue);
-  };
+import { Paper, Tabs, Tab } from "@material-ui/core";
+export default function SideBarNav({ value, handleChange }) {
 
   return (
     <>
