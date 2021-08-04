@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 // import axios from "axios";
+import Video from "./video/Video";
 import Sidebar from "./sidebar";
 import { io } from "socket.io-client";
 // import { sizing } from '@material-ui/system';
@@ -84,10 +85,11 @@ export default function Room() {
     <>
       <div className="container">
         <div className="video-player">
-          <img
+          {/* <img
             src="https://github.com/htkim94/campfire/blob/main/campfire-client/public/docs/yt_image.png?raw=true"
             alt="youtube screenshot"
-          />
+          /> */}
+          <Video />
         </div>
 
         <div className="sideBarNav">

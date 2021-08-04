@@ -5,19 +5,17 @@ import './Message.css'
 
 export default function Chatbox(props) {
  const { name, message, messages, setMessage, sendMessage } = props;
-
+  
   return (
-  <div className="outerContainer">
-    <div className="insideContainer">
-      <MessageList 
-        messages={messages}
-        name={name}
-      />
-      <MessageInput 
-        message={message}
-        setMessage={setMessage}
-        sendMessage={sendMessage}/>
+    <div className="outerContainer">
+      <div className="insideContainer">
+        <MessageList messages={messages} name={name} />
+        <MessageInput
+          message={message}
+          setMessage={setMessage}
+          sendMessage={sendMessage}
+        />
+      </div>
     </div>
-  </div>
-  )
+  );
 }
