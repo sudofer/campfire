@@ -7,21 +7,11 @@ import { Button, TextField, Dialog, DialogActions, DialogContent, DialogContentT
 let socket;
 
 export default function Home() {
-  // const [users, setUsers] = useState([]);
   const [url, setUrl] = useState("");
   const [name, setName] = useState("");
   const [openType, setOpenType] = useState("");
 
   const history = useHistory();
-
-  // useEffect(() => {
-  //   // axios.get('http://localhost:3002/users')
-  //   // .then(users => setUsers([...users.data ]));
-  //   socket = io('ws://localhost:3002');
-  //   socket.on('joinedRoom', () => {
-  //     console.log("successfully joined room")
-  //   })
-  // }, [])
 
   const ID = function () {   
     return '_' + Math.random().toString(36).substr(2, 9); 
@@ -41,7 +31,6 @@ export default function Home() {
   }
 
   const handleSubmit = () => {
-
     
     // room socket -- should be the only socket connection
     socket = io('ws://localhost:3002');
@@ -52,12 +41,6 @@ export default function Home() {
 
   return (
     <>
-
-    {/* <h1>Users</h1>
-    {users.map(user =>
-      <div key={user.id}>{user.username}</div>
-    )} */}
-
     {/* Create Room button */}
     <div className="create-room">
       <Button color="secondary" onClick={() => handleClick('create')}>Create room</Button>
