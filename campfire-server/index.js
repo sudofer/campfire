@@ -1,10 +1,5 @@
 const express = require("express");
-// const users = require("./routes/users");
-const cors = require("cors");
-const socketio = require("socket.io");
 const app = express();
-app.use(cors());
-// app.use("/users", users);
 
 const {
   addUser,
@@ -62,9 +57,15 @@ io.on("connection", (socket) => {
     callback();
   });
 
+<<<<<<< HEAD
   socket.on("disconnect", () => {
     console.log("user has disconnected!!");
     const user = removeUser(socket.id);
+=======
+  socket.on("disconnect_user", () => {
+    console.log("user has disconnected!!")
+    const user = removeUser(socket.id)
+>>>>>>> ab59c887ee84c18d3a0cac67d2e9b7bec082bc5c
 
     if (user) {
       io.to(user.room).emit("message", {
@@ -73,6 +74,11 @@ io.on("connection", (socket) => {
       });
     }
   });
+
+  
+  // socket.on("disconnect", () => {
+  //   console.log("user has disconnected!!")
+  // })
 
   socket.on("NEW_PLAY_LIST_ITEM", (item) => {
     //io.to(user.url).emit(item);
