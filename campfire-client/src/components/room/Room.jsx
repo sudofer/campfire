@@ -34,15 +34,9 @@ export default function Room() {
 
   // const classes = useStyles();
 
-<<<<<<< HEAD
-  const [name, setName] = useState("");
-  const [url, setURL] = useState("");
-  const [message, setMessage] = useState([]);
-=======
   const [name, setName] = useState('');
   const [url, setURL] = useState('');
   const [message, setMessage] = useState('');
->>>>>>> ab59c887ee84c18d3a0cac67d2e9b7bec082bc5c
   const [messages, setMessages] = useState([]);
   const ENDPOINT = "ws://localhost:3002";
 
@@ -58,19 +52,12 @@ export default function Room() {
     setName(name);
     setURL(roomUrl);
 
-<<<<<<< HEAD
-    socket.emit("createRoom", { name, url }, ({ error }) => {});
-
-    return () => {
-      socket.disconnect();
-=======
     socket.emit("createRoom", { name, url }, (error) => {
       console.log(error);
     })
 
     return() => {
       socket.emit('disconnect_user');
->>>>>>> ab59c887ee84c18d3a0cac67d2e9b7bec082bc5c
       socket.off();
     };
   }, [ENDPOINT, window.location.search]);
