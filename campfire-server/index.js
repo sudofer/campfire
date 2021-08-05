@@ -68,6 +68,12 @@ io.on("connection", (socket) => {
     console.log(item);
   });
 
+  socket.on("VIDEO_CONTROLS", (control) => {
+    const user = getUser(users, socket.id);
+    console.log("_______*_____", control);
+    io.in(user.url).emit("VIDEO_CONTROLS", control);
+  });
+
   socket.on("disconnect", () => {
     const user = getUser(users, socket.id);
 
@@ -84,7 +90,6 @@ io.on("connection", (socket) => {
 
     console.log("socket has disconnected!!");
   });
-
 });
 
 server.listen(PORT, () => {
