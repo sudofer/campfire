@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import SearchInput from "./SearchInput";
-import search from "youtube-search";
+// import search from "youtube-search";
 import SearchList from "./SearchList";
 export default function SearchBox({
   addPlayListItem,
   results,
-  searchTerm,
+  // searchTerm,
   setSearchTerm,
-  submitPlayListItem,
+  url,
 }) {
   console.log(process.env.REACT_APP_KEY);
 
@@ -28,18 +28,16 @@ export default function SearchBox({
 
   return (
     <>
-      {/* <SearchInput
-        value={searchTerm}
-        onChange={(event) => setSearchTerm(event.target.value)}
-      /> */}
-      <label>
+      {/* <label>
         Search
         <input
-          value={searchTerm}
-          onChange={(event) => setSearchTerm(event.target.value)}
+        value={searchTerm}
+        onChange={(event) => setSearchTerm(event.target.value)}
+        onKeyPress={event => event.key === 'Enter' ? console.log('searched') : null}
         />
-      </label>
-      <SearchList results={results} submitPlayListItem={submitPlayListItem} />
+      </label> */}
+      <SearchInput setSearchTerm={setSearchTerm} />
+      <SearchList results={results} url={url} addPlayListItem={addPlayListItem} />
     </>
   );
 }

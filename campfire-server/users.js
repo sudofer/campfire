@@ -1,6 +1,4 @@
-const users = [];
-
-const addUser = ({ id, name, url }) => {
+const addUser = (users, { id, name, url }) => {
   name = name.trim().toLowerCase();
   url = url.trim().toLowerCase();
   const existingUser = users.find((user) => user.url === url && user.name === name);
@@ -14,16 +12,16 @@ const addUser = ({ id, name, url }) => {
   return { user };
 };
  
-const removeUser = (id) => {
+const removeUser = (users, id) => {
   const index = users.findIndex((user) => user.id === id);
 
   if (index !== -1) {
-    return users.splice(index,1)[0]
+    users.splice(index,1)
   }
 };
 
-const getUser = (id) => users.find((user) => user.id === id);
+const getUser = (users, id) => users.find((user) => user.id === id);
 
-const getUsersInRoom = (url) => users.filter((user) => user.url === url);
+const getUsersInRoom = (users, url) => users.filter((user) => user.url === url);
 
 module.exports = { addUser, removeUser, getUser, getUsersInRoom };
