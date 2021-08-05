@@ -34,41 +34,52 @@ export default function Room() {
 
   // const classes = useStyles();
 
+  //State for user name & socket room url
   const [name, setName] = useState('');
   const [url, setURL] = useState('');
+
+  //State for chat messages
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
+
+  //State for youtube api search
+  const [results, setResults] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  //State for youtube playlist
+  const [playList, setPlayList] = useState([]);
+
+  //Server location for socket connection
   const ENDPOINT = "ws://localhost:3002";
-
+  
+  //Initialize socket and create Room
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const name = urlParams.get("name");
-    const roomUrl = urlParams.get("url");
-
-    console.log(name, roomUrl);
-
     socket = io(ENDPOINT);
 
-    setName(name);
+    const urlParams = new URLSearchParams(window.location.search);
+    const userName = urlParams.get("name");
+    const roomUrl = urlParams.get("url");
+
+    setName(userName);
     setURL(roomUrl);
 
-    socket.emit("createRoom", { name, url }, (error) => {
+    socket.emit("createRoom", { name: userName, url: roomUrl }, (error) => {
       console.log(error);
     })
 
     return() => {
-      socket.emit('disconnect_user');
-      socket.off();
+      socket.disconnect();
     };
-  }, [ENDPOINT, window.location.search]);
+  }, []);
 
+  //Receive messages from server and trigger setMessages
   useEffect(() => {
-    console.log(`client side: ${socket.id}`);
     socket.on("message", (message) => {
       setMessages([...messages, message]);
     });
   }, [messages]);
 
+  //Function for sending message
   const sendMessage = (event) => {
     event.preventDefault();
 
@@ -77,37 +88,35 @@ export default function Room() {
     }
   };
 
-  console.log(message, messages);
+  // console.log(message, messages);
 
-  const addPlayListItem = (item) => {
-    socket.emit("NEW_PLAY_LIST_ITEM", item);
-  };
-
-  //***********************SearchBox State
-  const [results, setResults] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const submitPlayListItem = (playListItem) => {
-    console.log(playListItem);
-    addPlayListItem(playListItem);
-  };
-
+  //Youtube search feature
   useEffect(() => {
     if (!searchTerm) return;
-    var opts = {
-      maxResults: 10,
+    const opts = {
+      maxResults: 1,
       key: process.env.REACT_APP_KEY,
       part: "snippet",
     };
 
     search(searchTerm, opts, function (err, results) {
       if (err) return console.log(err);
-
       setResults(results);
     });
   }, [searchTerm]);
 
-  //**********************************SearchBox State
+
+
+  //Add a search item to playlist
+  const addPlayListItem = (room, playListItem) => {
+    const { title, link, thumbnails, id } = playListItem;
+    socket.emit("NEW_PLAY_LIST_ITEM", {room, title, link, thumbnails, id});
+  };
+
+  // useEffect(() => {
+  //   socket.on("")
+  // })
+
 
   return (
     <>
@@ -124,6 +133,7 @@ export default function Room() {
           <Sidebar
             addPlayListItem={addPlayListItem}
             name={name}
+            url={url}
             message={message}
             messages={messages}
             setMessage={setMessage}
@@ -131,7 +141,6 @@ export default function Room() {
             results={results}
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}
-            submitPlayListItem={submitPlayListItem}
           />
         </div>
       </div>

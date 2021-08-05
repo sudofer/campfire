@@ -1,6 +1,6 @@
 import React from "react";
 import "./SearchItem.css";
-export default function SearchItem({ result, submitPlayListItem }) {
+export default function SearchItem({ result, addPlayListItem, url }) {
   console.log(result);
   const style = {
     width: "90px",
@@ -9,10 +9,10 @@ export default function SearchItem({ result, submitPlayListItem }) {
   return (
     <li className="SearchItemBox">
       <h5>{result.title}</h5>
-      <img style={style} src={result.thumbnails.default.url}></img>
+      <img style={style} src={result.thumbnails.default.url} alt={result.description}></img>
       <button
         onClick={() => {
-          submitPlayListItem(result);
+          addPlayListItem(url, result);
         }}
       >
         +

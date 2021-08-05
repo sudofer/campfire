@@ -23,6 +23,8 @@ export default function Home() {
   };
 
   const handleClose = () => {
+    setUrl('');
+    setName('');
     setOpenType('');
   }
 

@@ -1,15 +1,16 @@
 import React from "react";
 import SearchItem from "./SearchItem";
 
-export default function SearchList({ results, submitPlayListItem }) {
+export default function SearchList({ results, addPlayListItem, url }) {
   return (
     <ul>
       {results.map((result) => {
         return (
           <SearchItem
-            submitPlayListItem={submitPlayListItem}
+            addPlayListItem={addPlayListItem}
             key={result.id}
             result={result}
+            url={url}
           />
         );
       })}

@@ -7,6 +7,7 @@ export default function Sidebar(props) {
   const {
     addPlayListItem,
     name,
+    url,
     message,
     messages,
     setMessage,
@@ -14,7 +15,6 @@ export default function Sidebar(props) {
     results,
     searchTerm,
     setSearchTerm,
-    submitPlayListItem,
   } = props;
 
   const [value, setValue] = useState(0);
@@ -40,9 +40,9 @@ export default function Sidebar(props) {
         <SearchBox
           addPlayListItem={addPlayListItem}
           results={results}
+          url={url}
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
-          submitPlayListItem={submitPlayListItem}
         />
       )}
     </>

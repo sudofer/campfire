@@ -9,6 +9,8 @@ const {
   getUsersInRoom,
 } = require("./users");
 
+const users = [];
+
 const PORT = process.env.PORT || 3002;
 
 const http = require("http");
@@ -24,7 +26,9 @@ io.on("connection", (socket) => {
   console.log(`socket connection alive on id ${socket.id}`);
   socket.on("createRoom", ({ name, url }, callback) => {
     console.log(`user id ${socket.id} joined room ${url}!`);
-    const { error, user } = addUser({ id: socket.id, name, url });
+    const { error, user } = addUser(users, { id: socket.id, name, url });
+
+    console.log(users);
 
     if (error) return callback(error);
 
@@ -34,49 +38,51 @@ io.on("connection", (socket) => {
       text: `${user.name}, welcome to the room ${user.url}!`,
     });
     socket.broadcast
-      .to(user.url)
+      .to(url)
       .emit("message", { user: "admin", text: `${user.name} has joined!` });
 
-    socket.join(user.url);
+    socket.join(url);
 
-    io.to(user.room).emit("roomData", {
-      room: user.room,
-      users: getUsersInRoom(user.room),
-    });
+    // io.to(user.url).emit("roomData", {
+    //   room: user.url,
+    //   users: getUsersInRoom(user.room),
+    // });
 
     // callback();
   });
 
   socket.on("sendMessage", (message, callback) => {
-    const user = getUser(socket.id);
+    const user = getUser(users, socket.id);
     io.to(user.url).emit("message", { user: user.name, text: message });
-    io.to(user.url).emit("roomData", {
-      room: user.name,
-      users: getUsersInRoom(user.room),
-    });
+    // io.to(user.url).emit("roomData", {
+    //   room: user.name,
+    //   users: getUsersInRoom(user.room),
+    // });
     callback();
   });
 
-  socket.on("disconnect_user", () => {
-    console.log("user has disconnected!!")
-    const user = removeUser(socket.id)
+  socket.on("NEW_PLAY_LIST_ITEM", (item) => {
+    io.in(url).emit("NEW_PLAY_LIST_ITEM", item);
+    console.log(item);
+  });
+
+  socket.on("disconnect", () => {
+    const user = getUser(users, socket.id);
 
     if (user) {
-      io.to(user.room).emit("message", {
+      io.to(user.url).emit("message", {
         user: "admin",
-        text: `${user} has left the room.`,
+        text: `${user.name} has left the room.`,
       });
+
+      removeUser(users, socket.id);
+
+      socket.leave(user.url);
     }
+
+    console.log("socket has disconnected!!");
   });
 
-  
-  // socket.on("disconnect", () => {
-  //   console.log("user has disconnected!!")
-  // })
-
-  socket.on("NEW_PLAY_LIST_ITEM", (item) => {
-    //io.to(user.url).emit(item);
-  });
 });
 
 server.listen(PORT, () => {
