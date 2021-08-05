@@ -33,6 +33,9 @@ io.on("connection", (socket) => {
     if (error) return callback(error);
 
     console.log(`about to emit message to ${socket.id}`);
+
+    socket.join(url);
+
     socket.emit("message", {
       user: "admin",
       text: `${user.name}, welcome to the room ${user.url}!`,
@@ -40,8 +43,6 @@ io.on("connection", (socket) => {
     socket.broadcast
       .to(url)
       .emit("message", { user: "admin", text: `${user.name} has joined!` });
-
-    socket.join(url);
 
     // io.to(user.url).emit("roomData", {
     //   room: user.url,
@@ -58,10 +59,11 @@ io.on("connection", (socket) => {
     //   room: user.name,
     //   users: getUsersInRoom(user.room),
     // });
-    callback();
+    // callback();
   });
 
   socket.on("NEW_PLAY_LIST_ITEM", (item) => {
+    const url = getUser(users, socket.id).url;
     io.in(url).emit("NEW_PLAY_LIST_ITEM", item);
     console.log(item);
   });

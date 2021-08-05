@@ -15,6 +15,7 @@ export default function Sidebar(props) {
     results,
     searchTerm,
     setSearchTerm,
+    playList
   } = props;
 
   const [value, setValue] = useState(0);
@@ -35,7 +36,7 @@ export default function Sidebar(props) {
           sendMessage={sendMessage}
         />
       )}
-      {value === 1 && <PlaylistBox />}
+      {value === 1 && <PlaylistBox playList={playList}/>}
       {value === 2 && (
         <SearchBox
           addPlayListItem={addPlayListItem}

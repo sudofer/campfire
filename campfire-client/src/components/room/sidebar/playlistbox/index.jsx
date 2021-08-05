@@ -1,20 +1,10 @@
 import React from "react";
+import PlayListItem from "./PlaylistItem";
 
-export default function PlaylistBox() {
+
+export default function PlaylistBox({playList}) {
   return (
-    <>
-      {/* <ul>
-        {results.map((result) => {
-          return (
-            <SearchItem
-            // addPlayListItem={addPlayListItem}
-            // key={result.id}
-            // result={result}
-            // url={url}
-            />
-          );
-        })}
-      </ul> */}
-    </>
-  );
+    playList.map((item) => <PlayListItem playListItem={item} />)
+  )
+
 }

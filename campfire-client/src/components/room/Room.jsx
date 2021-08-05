@@ -67,24 +67,34 @@ export default function Room() {
       console.log(error);
     });
 
-    return () => {
+    socket.on("message", (message) => {
+      setMessages(prev => [...prev, message]);
+    });
+
+    socket.on("NEW_PLAY_LIST_ITEM", (playListItem) => {
+      setPlayList(prev => [...prev, playListItem]);
+    });
+
+    return() => {
       socket.disconnect();
     };
   }, []);
 
   //Receive messages from server and trigger setMessages
-  useEffect(() => {
-    socket.on("message", (message) => {
-      setMessages([...messages, message]);
-    });
-  }, [messages]);
+  // useEffect(() => {
+  //   socket.on("message", (message) => {
+  //     setMessages([...messages, message]);
+  //   });
+  // }, []);
 
   //Function for sending message
   const sendMessage = (event) => {
     event.preventDefault();
 
     if (message) {
-      socket.emit("sendMessage", message, () => setMessage(""));
+      // socket.emit("sendMessage", message, () => setMessage(""));
+      socket.emit("sendMessage", message);
+      setMessage("");
     }
   };
 
@@ -106,15 +116,19 @@ export default function Room() {
   }, [searchTerm]);
 
   //Add a search item to playlist
-  const addPlayListItem = (room, playListItem) => {
+  const addPlayListItem = (playListItem) => {
     const { title, link, thumbnails, id } = playListItem;
-    socket.emit("NEW_PLAY_LIST_ITEM", { room, title, link, thumbnails, id });
+    
+    socket.emit("NEW_PLAY_LIST_ITEM", {title, link, thumbnails, id});
   };
 
   // Receive Playlist Item
   // useEffect(() => {
-  //   socket.on("NEW_PLAY_LIST_ITEM", {})
-  // })
+  //   socket.on("NEW_PLAY_LIST_ITEM", (playListItem) => {
+  //     setPlayList(prev => [...prev, playListItem]);
+  //   })
+  // }, [playList]);
+
 
   return (
     <>
@@ -130,8 +144,9 @@ export default function Room() {
         <div className="sideBarNav">
           <Sidebar
             addPlayListItem={addPlayListItem}
+            playList={playList}
             name={name}
-            url={url}
+            // url={url}
             message={message}
             messages={messages}
             setMessage={setMessage}

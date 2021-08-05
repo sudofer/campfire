@@ -7,7 +7,6 @@ export default function SearchBox({
   results,
   // searchTerm,
   setSearchTerm,
-  url,
 }) {
   console.log(process.env.REACT_APP_KEY);
 
@@ -37,7 +36,7 @@ export default function SearchBox({
         />
       </label> */}
       <SearchInput setSearchTerm={setSearchTerm} />
-      <SearchList results={results} url={url} addPlayListItem={addPlayListItem} />
+      <SearchList results={results} addPlayListItem={addPlayListItem} />
     </>
   );
 }
