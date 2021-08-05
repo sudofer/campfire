@@ -35,11 +35,11 @@ export default function Room() {
   // const classes = useStyles();
 
   //State for user name & socket room url
-  const [name, setName] = useState('');
-  const [url, setURL] = useState('');
+  const [name, setName] = useState("");
+  const [url, setURL] = useState("");
 
   //State for chat messages
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
   //State for youtube api search
@@ -51,7 +51,7 @@ export default function Room() {
 
   //Server location for socket connection
   const ENDPOINT = "ws://localhost:3002";
-  
+
   //Initialize socket and create Room
   useEffect(() => {
     socket = io(ENDPOINT);
@@ -65,9 +65,9 @@ export default function Room() {
 
     socket.emit("createRoom", { name: userName, url: roomUrl }, (error) => {
       console.log(error);
-    })
+    });
 
-    return() => {
+    return () => {
       socket.disconnect();
     };
   }, []);
@@ -105,18 +105,16 @@ export default function Room() {
     });
   }, [searchTerm]);
 
-
-
   //Add a search item to playlist
   const addPlayListItem = (room, playListItem) => {
     const { title, link, thumbnails, id } = playListItem;
-    socket.emit("NEW_PLAY_LIST_ITEM", {room, title, link, thumbnails, id});
+    socket.emit("NEW_PLAY_LIST_ITEM", { room, title, link, thumbnails, id });
   };
 
+  // Receive Playlist Item
   // useEffect(() => {
-  //   socket.on("")
+  //   socket.on("NEW_PLAY_LIST_ITEM", {})
   // })
-
 
   return (
     <>
@@ -126,7 +124,7 @@ export default function Room() {
             src="https://github.com/htkim94/campfire/blob/main/campfire-client/public/docs/yt_image.png?raw=true"
             alt="youtube screenshot"
           /> */}
-          <Video />
+          <Video socket={socket} />
         </div>
 
         <div className="sideBarNav">
