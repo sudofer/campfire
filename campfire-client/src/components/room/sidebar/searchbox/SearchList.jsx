@@ -1,7 +1,7 @@
 import React from "react";
 import SearchItem from "./SearchItem";
 
-export default function SearchList({ results, addPlayListItem, url }) {
+export default function SearchList({ results, addPlayListItem }) {
   return (
     <ul>
       {results.map((result) => {
@@ -10,7 +10,6 @@ export default function SearchList({ results, addPlayListItem, url }) {
             addPlayListItem={addPlayListItem}
             key={result.id}
             result={result}
-            url={url}
           />
         );
       })}
