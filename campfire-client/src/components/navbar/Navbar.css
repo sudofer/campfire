@@ -1,15 +1,10 @@
-a {
-  text-decoration: none;
-  color: black;
-  margin: 0px 10px 0px 10px;
-}
-
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 70px;
-  background-color: lightskyblue;
+  background-color: #000000;
+  opacity: 0.2;
   font-size: 30px;
   font-family: "Helvetica Neue";
 }
@@ -22,4 +17,14 @@ a {
   display: flex;
   margin-right: 10px;
   align-items: center;
+}
+
+a {
+  text-decoration: none;
+  color: #FFFFFF;
+  margin: 0px 10px 0px 10px;
+}
+
+a:hover {
+  text-decoration: strong;
 }
