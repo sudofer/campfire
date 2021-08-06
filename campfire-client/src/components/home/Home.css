@@ -1,3 +1,5 @@
+/* video background config */
+
 * { box-sizing: border-box; }
 .video-background {
   background: #000;
@@ -14,10 +16,7 @@
   height: 100%;
   pointer-events: none;
 }
-#vidtop-content {
-	top: 0;
-	color: #fff;
-}
+
 .vid-info { position: absolute; top: 0; right: 0; width: 33%; background: rgba(0,0,0,0.3); color: #fff; padding: 1rem; font-family: Avenir, Helvetica, sans-serif; }
 .vid-info h1 { font-size: 2rem; font-weight: 700; margin-top: 0; line-height: 1.2; }
 .vid-info a { display: block; color: #fff; text-decoration: none; background: rgba(0,0,0,0.5); transition: .6s background; border-bottom: none; margin: 1rem auto; text-align: center; }
@@ -34,3 +33,40 @@
 @media all and (max-width: 500px) {
 .vid-info .acronym { display: none; }
 }
+
+/* front page body config */
+
+body {
+  margin: 0;
+}
+
+:root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background: rgba(16,19,86,0.6),
+}
+
+.frontPageBody {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pageTitle {
+  display: flex;
+  justify-content: center;
+  color: rgba(234, 226, 183, 0.9);
+  text-shadow: 1.5px 1.5px 1.5px #000;
+}
+
+.roomButtons {
+  display: flex;
+  justify-content: center;
+}
+
+h1 {
+  font-size: 4em;
+}
+
