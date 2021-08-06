@@ -92,7 +92,6 @@ export default function Room() {
     event.preventDefault();
 
     if (message) {
-      // socket.emit("sendMessage", message, () => setMessage(""));
       socket.emit("SEND_MESSAGE", { message, url });
       setMessage("");
     }
@@ -136,7 +135,7 @@ export default function Room() {
             src="https://github.com/htkim94/campfire/blob/main/campfire-client/public/docs/yt_image.png?raw=true"
             alt="youtube screenshot"
           /> */}
-          <Video />
+          <Video socket={socket} />
         </div>
 
         <div className="sideBarNav">
@@ -144,6 +143,7 @@ export default function Room() {
             addPlayListItem={addPlayListItem}
             playList={playList}
             name={name}
+            // url={url}
             message={message}
             messages={messages}
             setMessage={setMessage}

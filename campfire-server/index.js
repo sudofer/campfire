@@ -75,6 +75,12 @@ io.on("connection", (socket) => {
     io.in(url).emit("NEW_PLAY_LIST_ITEM", playListItem);
   });
 
+  socket.on("VIDEO_CONTROLS", (control) => {
+    const user = getUser(users, socket.id);
+    console.log("_______*_____", control);
+    io.in(user.url).emit("VIDEO_CONTROLS", control);
+  });
+
   socket.on("disconnect", () => {
     const room = getRoomById(data, socket.id);
 
