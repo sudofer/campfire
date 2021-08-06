@@ -78,7 +78,7 @@ io.on("connection", (socket) => {
 
   socket.on("VIDEO_CONTROLS", (control) => {
     const user = getUser(users, socket.id);
-    console.log("_______*_____", control);
+    console.log("server ln 73*_____", control);
     io.in(user.url).emit("VIDEO_CONTROLS", control);
   });
 

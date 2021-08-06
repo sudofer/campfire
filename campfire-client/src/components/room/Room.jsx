@@ -144,7 +144,7 @@ export default function Room() {
             src="https://github.com/htkim94/campfire/blob/main/campfire-client/public/docs/yt_image.png?raw=true"
             alt="youtube screenshot"
           /> */}
-          <Video socket={socket} />
+          <Video socket={socket} playList={playList} />
         </div>
 
         <div className="sideBarNav">
