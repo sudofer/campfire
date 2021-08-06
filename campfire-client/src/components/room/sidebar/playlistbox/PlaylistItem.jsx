@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 export default function PlayListItem({ playListItem }) {
@@ -13,4 +12,3 @@ export default function PlayListItem({ playListItem }) {
     </li>
   );
 }
-
