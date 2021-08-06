@@ -63,37 +63,36 @@ export default function Room() {
     setName(userName);
     setURL(roomUrl);
 
-    socket.emit("createRoom", { name: userName, url: roomUrl }, (error) => {
-      console.log(error);
+    socket.emit("CREATE_ROOM", { name: userName, url: roomUrl });
+
+    socket.on("USER_ALREADY_EXIST", (callback) => {
+      const errorMessage = "USERNAME ALREADY EXIST";
+      callback(errorMessage);
     });
 
-    socket.on("message", (message) => {
-      setMessages(prev => [...prev, message]);
+    socket.on("MESSAGE", (message) => {
+      setMessages((prev) => [...prev, message]);
+    });
+
+    socket.on("EXISTING_PLAY_LIST", (playList) => {
+      setPlayList([...playList]);
     });
 
     socket.on("NEW_PLAY_LIST_ITEM", (playListItem) => {
-      setPlayList(prev => [...prev, playListItem]);
+      setPlayList((prev) => [...prev, playListItem]);
     });
 
-    return() => {
+    return () => {
       socket.disconnect();
     };
   }, []);
-
-  //Receive messages from server and trigger setMessages
-  // useEffect(() => {
-  //   socket.on("message", (message) => {
-  //     setMessages([...messages, message]);
-  //   });
-  // }, []);
 
   //Function for sending message
   const sendMessage = (event) => {
     event.preventDefault();
 
     if (message) {
-      // socket.emit("sendMessage", message, () => setMessage(""));
-      socket.emit("sendMessage", message);
+      socket.emit("SEND_MESSAGE", { message, url });
       setMessage("");
     }
   };
@@ -118,8 +117,7 @@ export default function Room() {
   //Add a search item to playlist
   const addPlayListItem = (playListItem) => {
     const { title, link, thumbnails, id } = playListItem;
-    
-    socket.emit("NEW_PLAY_LIST_ITEM", {title, link, thumbnails, id});
+    socket.emit("NEW_PLAY_LIST_ITEM", { url, title, link, thumbnails, id });
   };
 
   // Receive Playlist Item
@@ -128,7 +126,6 @@ export default function Room() {
   //     setPlayList(prev => [...prev, playListItem]);
   //   })
   // }, [playList]);
-
 
   return (
     <>
