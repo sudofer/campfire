@@ -52,9 +52,10 @@ io.on("connection", (socket) => {
         adminChatJoin(socket, url, name);
         socket.emit("EXISTING_PLAY_LIST", data[roomIndex].playList);
       } else {
-        socket.emit("USER_ALREADY_EXIST", (error) => console.log(error));
+        socket.emit("USER_ALREADY_EXIST", { error: "USERNAME ALREADY EXIST" });
       }
     }
+    console.log(data);
   });
 
   socket.on("SEND_MESSAGE", ({ message, url }) => {
@@ -104,6 +105,7 @@ io.on("connection", (socket) => {
 
       socket.leave(room.url);
     }
+    console.log(data);
     console.log("socket has disconnected!!");
   });
 });
