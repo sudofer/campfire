@@ -68,14 +68,14 @@ export default function Room() {
     });
 
     socket.on("message", (message) => {
-      setMessages(prev => [...prev, message]);
+      setMessages((prev) => [...prev, message]);
     });
 
     socket.on("NEW_PLAY_LIST_ITEM", (playListItem) => {
-      setPlayList(prev => [...prev, playListItem]);
+      setPlayList((prev) => [...prev, playListItem]);
     });
 
-    return() => {
+    return () => {
       socket.disconnect();
     };
   }, []);
@@ -118,8 +118,8 @@ export default function Room() {
   //Add a search item to playlist
   const addPlayListItem = (playListItem) => {
     const { title, link, thumbnails, id } = playListItem;
-    
-    socket.emit("NEW_PLAY_LIST_ITEM", {title, link, thumbnails, id});
+
+    socket.emit("NEW_PLAY_LIST_ITEM", { title, link, thumbnails, id });
   };
 
   // Receive Playlist Item
@@ -129,7 +129,6 @@ export default function Room() {
   //   })
   // }, [playList]);
 
-
   return (
     <>
       <div className="container">
@@ -138,7 +137,7 @@ export default function Room() {
             src="https://github.com/htkim94/campfire/blob/main/campfire-client/public/docs/yt_image.png?raw=true"
             alt="youtube screenshot"
           /> */}
-          <Video socket={socket} />
+          <Video socket={socket} playList={playList} />
         </div>
 
         <div className="sideBarNav">
