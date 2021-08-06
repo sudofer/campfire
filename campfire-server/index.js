@@ -76,10 +76,9 @@ io.on("connection", (socket) => {
     io.in(url).emit("NEW_PLAY_LIST_ITEM", playListItem);
   });
 
-  socket.on("VIDEO_CONTROLS", (control) => {
-    const user = getUser(users, socket.id);
-    console.log("server ln 73*_____", control);
-    io.in(user.url).emit("VIDEO_CONTROLS", control);
+  socket.on("VIDEO_CONTROLS", ({ type, time, url }) => {
+    console.log("server ln 73*_____", { type, time });
+    io.in(url).emit("VIDEO_CONTROLS", { type, time });
   });
 
   socket.on("disconnect", () => {
