@@ -68,5 +68,15 @@ body {
 
 h1 {
   font-size: 4em;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.create-room {
+  margin-right: 15px;
+}
+
+.join-room {
+  margin-left: 15px;
 }
 
