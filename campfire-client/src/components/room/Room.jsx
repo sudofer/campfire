@@ -35,11 +35,11 @@ export default function Room() {
   // const classes = useStyles();
 
   //State for user name & socket room url
-  const [name, setName] = useState('');
-  const [url, setURL] = useState('');
+  const [name, setName] = useState("");
+  const [url, setURL] = useState("");
 
   //State for chat messages
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
   //State for youtube api search
@@ -51,7 +51,7 @@ export default function Room() {
 
   //Server location for socket connection
   const ENDPOINT = "ws://localhost:3002";
-  
+
   //Initialize socket and create Room
   useEffect(() => {
     socket = io(ENDPOINT);
@@ -63,29 +63,29 @@ export default function Room() {
     setName(userName);
     setURL(roomUrl);
 
-    socket.emit("createRoom", { name: userName, url: roomUrl }, (error) => {
-      console.log(error);
-    })
+    socket.emit("CREATE_ROOM", { name: userName, url: roomUrl });
 
-    socket.on("message", (message) => {
-      setMessages(prev => [...prev, message]);
+    socket.on("USER_ALREADY_EXIST", (callback) => {
+      const errorMessage = "USERNAME ALREADY EXIST";
+      callback(errorMessage);
+    });
+
+    socket.on("MESSAGE", (message) => {
+      setMessages((prev) => [...prev, message]);
+    });
+
+    socket.on("EXISTING_PLAY_LIST", (playList) => {
+      setPlayList([...playList]);
     });
 
     socket.on("NEW_PLAY_LIST_ITEM", (playListItem) => {
-      setPlayList(prev => [...prev, playListItem]);
+      setPlayList((prev) => [...prev, playListItem]);
     });
 
-    return() => {
+    return () => {
       socket.disconnect();
     };
   }, []);
-
-  //Receive messages from server and trigger setMessages
-  // useEffect(() => {
-  //   socket.on("message", (message) => {
-  //     setMessages([...messages, message]);
-  //   });
-  // }, []);
 
   //Function for sending message
   const sendMessage = (event) => {
@@ -93,7 +93,7 @@ export default function Room() {
 
     if (message) {
       // socket.emit("sendMessage", message, () => setMessage(""));
-      socket.emit("sendMessage", message);
+      socket.emit("SEND_MESSAGE", { message, url });
       setMessage("");
     }
   };
@@ -115,11 +115,10 @@ export default function Room() {
     });
   }, [searchTerm]);
 
-
   //Add a search item to playlist
   const addPlayListItem = (playListItem) => {
     const { title, link, thumbnails, id } = playListItem;
-    socket.emit("NEW_PLAY_LIST_ITEM", {title, link, thumbnails, id});
+    socket.emit("NEW_PLAY_LIST_ITEM", { url, title, link, thumbnails, id });
   };
 
   // Receive Playlist Item
@@ -128,7 +127,6 @@ export default function Room() {
   //     setPlayList(prev => [...prev, playListItem]);
   //   })
   // }, [playList]);
-
 
   return (
     <>
@@ -146,7 +144,6 @@ export default function Room() {
             addPlayListItem={addPlayListItem}
             playList={playList}
             name={name}
-            // url={url}
             message={message}
             messages={messages}
             setMessage={setMessage}

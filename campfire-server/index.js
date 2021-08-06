@@ -2,14 +2,20 @@ const express = require("express");
 const app = express();
 
 const {
-  addUser,
+  adminChatJoin,
+  adminChatWelcome,
+  checkExistingUser,
   removeUser,
   getUser,
-  getUserInRoom,
   getUsersInRoom,
+  getRoomById,
+  getRoomByUrl,
+  getRoomIndex,
+  removeRoom,
 } = require("./users");
 
-const users = [];
+// we want data to have array of objects with roomUrl, users(array), playlist(array)
+const data = [];
 
 const PORT = process.env.PORT || 3002;
 
@@ -24,37 +30,37 @@ const io = require("socket.io")(server, {
 
 io.on("connection", (socket) => {
   console.log(`socket connection alive on id ${socket.id}`);
-  socket.on("createRoom", ({ name, url }, callback) => {
-    console.log(`user id ${socket.id} joined room ${url}!`);
-    const { error, user } = addUser(users, { id: socket.id, name, url });
 
-    console.log(users);
+  socket.on("CREATE_ROOM", ({ name, url }) => {
+    const trimmedName = name.trim().toLowerCase();
+    const user = { id: socket.id, name: trimmedName };
 
-    if (error) return callback(error);
-
-    console.log(`about to emit message to ${socket.id}`);
-
-    socket.join(url);
-
-    socket.emit("message", {
-      user: "admin",
-      text: `${user.name}, welcome to the room ${user.url}!`,
-    });
-    socket.broadcast
-      .to(url)
-      .emit("message", { user: "admin", text: `${user.name} has joined!` });
-
-    // io.to(user.url).emit("roomData", {
-    //   room: user.url,
-    //   users: getUsersInRoom(user.room),
-    // });
-
-    // callback();
+    if (!getRoomByUrl(data, url)) {
+      data.push({
+        url,
+        users: [user],
+        playList: [],
+      });
+      socket.join(url);
+      adminChatWelcome(socket, name);
+    } else {
+      const roomIndex = getRoomIndex(data, url);
+      if (checkExistingUser(data[roomIndex].users, trimmedName) === false) {
+        data[roomIndex].users.push(user);
+        socket.join(url);
+        adminChatWelcome(socket, name);
+        adminChatJoin(socket, url, name);
+        socket.emit("EXISTING_PLAY_LIST", data[roomIndex].playList);
+      } else {
+        socket.emit("USER_ALREADY_EXIST", (error) => console.log(error));
+      }
+    }
   });
 
-  socket.on("sendMessage", (message, callback) => {
-    const user = getUser(users, socket.id);
-    io.to(user.url).emit("message", { user: user.name, text: message });
+  socket.on("SEND_MESSAGE", ({ message, url }) => {
+    const room = getRoomByUrl(data, url);
+    const user = getUser(room.users, socket.id);
+    io.to(room.url).emit("MESSAGE", { user: user.name, text: message });
     // io.to(user.url).emit("roomData", {
     //   room: user.name,
     //   users: getUsersInRoom(user.room),
@@ -62,29 +68,38 @@ io.on("connection", (socket) => {
     // callback();
   });
 
-  socket.on("NEW_PLAY_LIST_ITEM", (item) => {
-    const url = getUser(users, socket.id).url;
-    io.in(url).emit("NEW_PLAY_LIST_ITEM", item);
-    console.log(item);
+  socket.on("NEW_PLAY_LIST_ITEM", ({ url, title, link, thumbnails, id }) => {
+    const roomIndex = getRoomIndex(data, url);
+    const playListItem = { title, link, thumbnails, id };
+    data[roomIndex].playList.push(playListItem);
+    io.in(url).emit("NEW_PLAY_LIST_ITEM", playListItem);
   });
 
   socket.on("disconnect", () => {
-    const user = getUser(users, socket.id);
+    const room = getRoomById(data, socket.id);
 
-    if (user) {
-      io.to(user.url).emit("message", {
-        user: "admin",
-        text: `${user.name} has left the room.`,
-      });
+    if (room) {
+      const url = room.url;
+      const roomIndex = getRoomIndex(data, url);
 
-      removeUser(users, socket.id);
+      if (room.users.length === 1) {
+        removeRoom(data, roomIndex);
+      } else {
+        const user = getUser(room.users, socket.id);
 
-      socket.leave(user.url);
+        if (user) {
+          io.to(room.url).emit("MESSAGE", {
+            user: "admin",
+            text: `${user.name} has left the room.`,
+          });
+        }
+        removeUser(data[roomIndex].users, socket.id);
+      }
+
+      socket.leave(room.url);
     }
-
     console.log("socket has disconnected!!");
   });
-
 });
 
 server.listen(PORT, () => {
