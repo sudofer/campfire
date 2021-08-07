@@ -85,19 +85,11 @@ export default function Home() {
   }));
 
   // dialog pop up boxes set to dark mode
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-  const darkMode = React.useMemo(
-    () =>
-      createTheme({
-        palette: {
-          primary: {
-            main: '#ffffff',
-          },
-          type: prefersDarkMode ? 'dark' : 'light',
-        },
-      }),
-    [prefersDarkMode],
-  );
+  const darkTheme = createTheme({
+    palette: {
+      type: 'dark',
+    },
+  });
 
   const classes = useStyles();
 
@@ -160,7 +152,7 @@ export default function Home() {
         </Grid>
       </Container>
 
-      <ThemeProvider theme={darkMode}> 
+      <ThemeProvider theme={darkTheme}> 
       <CssBaseline/>
 
       <div className="roomButtons">  
