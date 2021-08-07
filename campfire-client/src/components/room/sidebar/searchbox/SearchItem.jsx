@@ -1,7 +1,6 @@
 import React from "react";
 import "./SearchItem.css";
 export default function SearchItem({ result, addPlayListItem }) {
-  console.log(result);
   const style = {
     width: "90px",
     height: "45px",

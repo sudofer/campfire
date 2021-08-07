@@ -8,7 +8,6 @@ export default function SearchBox({
   // searchTerm,
   setSearchTerm,
 }) {
-  console.log(process.env.REACT_APP_KEY);
 
   // const setSearchTerm = (term) => {
   //   console.log(term, "*******");

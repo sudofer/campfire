@@ -4,7 +4,6 @@ export default function SearchInput({ setSearchTerm }) {
   const [val, setVal] = useState("");
   const formSubmit = (event) => {
     event.preventDefault();
-    console.log(val);
     setSearchTerm(val);
     setVal("");
     //event.target.value = "";
@@ -12,7 +11,6 @@ export default function SearchInput({ setSearchTerm }) {
 
   function handleChange(evt) {
     setVal(evt.target.value);
-    console.log(evt.target.value);
   }
 
   return (
