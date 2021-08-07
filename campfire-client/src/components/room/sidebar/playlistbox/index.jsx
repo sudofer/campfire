@@ -5,17 +5,25 @@ export default function PlaylistBox({
   playList,
   setPlayList,
   setCurrentPlaying,
-  emitChosenOne
+  emitChosenOne,
+  removeFromPlayList,
 }) {
-  return playList.map((item, index) => (
-    <PlayListItem
-      key={item.id}
-      playList={playList}
-      playListItem={item}
-      setPlayList={setPlayList}
-      index={index}
-      setCurrentPlaying={setCurrentPlaying}
-      emitChosenOne={emitChosenOne}
-    />
-  ));
+  const playListID = function () {
+    return Math.random().toString(36).substr(2, 9);
+  };
+  return playList.map((item, index) => {
+    const id = playListID();
+    return (
+      <PlayListItem
+        key={id}
+        playList={playList}
+        playListItem={item}
+        setPlayList={setPlayList}
+        index={index}
+        setCurrentPlaying={setCurrentPlaying}
+        emitChosenOne={emitChosenOne}
+        removeFromPlayList={removeFromPlayList}
+      />
+    );
+  });
 }

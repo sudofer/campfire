@@ -40,6 +40,7 @@ io.on("connection", (socket) => {
         url,
         users: [user],
         playList: [],
+        currentPlaying: null,
       });
       socket.join(url);
       const room = getRoomByUrl(data, url);
@@ -54,7 +55,10 @@ io.on("connection", (socket) => {
         io.in(url).emit("ADD_USER_DATA", { users: room.users });
         adminChatWelcome(socket, name);
         adminChatJoin(socket, url, name);
-        socket.emit("EXISTING_PLAY_LIST", data[roomIndex].playList);
+        socket.emit("EXISTING_PLAY_LIST", {
+          playList: data[roomIndex].playList,
+          currentPlaying: data[roomIndex].currentPlaying,
+        });
       } else {
         socket.emit("USER_ALREADY_EXIST", { error: "USERNAME ALREADY EXIST" });
       }
@@ -94,16 +98,31 @@ io.on("connection", (socket) => {
     io.in(url).emit("NEW_PLAY_LIST_ITEM", playListItem);
   });
 
-  socket.on("PLAYLIST_CONTROLS", ({ url, type, nextPlayListIndex }) => {
+  socket.on("PLAYLIST_CONTROLS", ({ url, type, index }) => {
+    const roomIndex = getRoomIndex(data, url);
     if (type === "upNext") {
-      io.in(url).emit("PLAYLIST_CONTROLS", { type, nextPlayListIndex })
+      data[roomIndex].currentPlaying = index;
+      io.in(url).emit("PLAYLIST_CONTROLS", { type, index });
     } else if (type === "chosenOne") {
-      console.log(nextPlayListIndex);
-      io.in(url).emit("PLAYLIST_CONTROLS", { type, nextPlayListIndex })
+      data[roomIndex].currentPlaying = index;
+      io.in(url).emit("PLAYLIST_CONTROLS", { type, index });
+    } else if (type === "DELETE_ITEM") {
+      console.log("server got delete item message");
+      data[roomIndex].playList.splice(index, 1);
+      const currentPlaying = data[roomIndex].currentPlaying;
+      if (!data[roomIndex].playList[currentPlaying]) {
+        data[roomIndex].currentPlaying--;
+      }
+      console.log(data[roomIndex].playList, "PLAYLIST PLAYLIST");
+      io.in(url).emit("PLAYLIST_CONTROLS", {
+        type,
+        index: data[roomIndex].currentPlaying,
+        newPlayList: data[roomIndex].playList,
+      });
     }
-  })
+  });
 
-  socket.on("VIDEO_CONTROLS", ({url, type, time}) => {
+  socket.on("VIDEO_CONTROLS", ({ url, type, time }) => {
     io.in(url).emit("VIDEO_CONTROLS", { type, time });
   });
 

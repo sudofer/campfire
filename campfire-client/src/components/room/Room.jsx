@@ -35,7 +35,6 @@ export default function Room() {
 
   //State for users in a room
   const [roomUsers, setRoomUsers] = useState([]);
-  console.log(roomUsers);
   // const classes = useStyles();
   const history = useHistory();
   const [socket, setSocket] = useState(undefined);
@@ -88,7 +87,8 @@ export default function Room() {
         setMessages((prev) => [...prev, message]);
       });
 
-      socket.on("EXISTING_PLAY_LIST", (playList) => {
+      socket.on("EXISTING_PLAY_LIST", ({ playList, currentPlaying }) => {
+        setCurrentPlaying(currentPlaying);
         setPlayList([...playList]);
       });
 
@@ -104,13 +104,19 @@ export default function Room() {
         setRoomUsers((prev) => [...users]);
       });
 
-      socket.on("PLAYLIST_CONTROLS", ({ type, nextPlayListIndex }) => {
+      socket.on("PLAYLIST_CONTROLS", ({ type, index, newPlayList }) => {
         if (type === "upNext") {
-          setCurrentPlaying(nextPlayListIndex);
+          setCurrentPlaying(index);
         } else if (type === "chosenOne") {
-          setCurrentPlaying(nextPlayListIndex);
+          setCurrentPlaying(index);
+        } else if (type === "DELETE_ITEM") {
+          if (currentPlaying !== index) {
+            setCurrentPlaying(index);
+          }
+          setPlayList((prev) => [...newPlayList]);
+          console.log(playList);
         }
-      })
+      });
 
       return () => {
         socket.disconnect();
@@ -149,12 +155,26 @@ export default function Room() {
     socket.emit("NEW_PLAY_LIST_ITEM", { url, title, link, thumbnails, id });
   };
 
+  //Remove item from playlist
+  const removeFromPlayList = (index) => {
+    console.log("CLICKLCICKCLICK", index);
+    socket.emit("PLAYLIST_CONTROLS", {
+      url,
+      type: "DELETE_ITEM",
+      index,
+    });
+  };
+
   //Choose video from list
   const emitChosenOne = (index) => {
     console.log("IM THE CHOSEN ONE");
     console.log("aaa", index);
-    socket.emit("PLAYLIST_CONTROLS", { url, type: "chosenOne", nextPlayListIndex: index });
-  }
+    socket.emit("PLAYLIST_CONTROLS", {
+      url,
+      type: "chosenOne",
+      index,
+    });
+  };
 
   return (
     <>
@@ -192,6 +212,7 @@ export default function Room() {
             setSearchTerm={setSearchTerm}
             setCurrentPlaying={setCurrentPlaying}
             emitChosenOne={emitChosenOne}
+            removeFromPlayList={removeFromPlayList}
           />
         </div>
       </div>

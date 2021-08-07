@@ -20,8 +20,16 @@ export default function Video({
   useEffect(() => {
     if (playList.length === 0) {
       setVideoUrl("");
+      // } else if (playList.length === 1) {
+      //   if (playList[0]) {
+      //     const newVideoUrl = playList[0].link.split("v=")[1].split("&")[0];
+      //     if (videoUrl !== newVideoUrl) {
+      //       setVideoUrl(newVideoUrl);
+      //     }
+      //   }
+      // }
     } else {
-      if (playList[currentPlaying]) {
+      if (playList[currentPlaying] && playList[currentPlaying].link) {
         const newVideoUrl = playList[currentPlaying].link
           .split("v=")[1]
           .split("&")[0];
@@ -45,7 +53,7 @@ export default function Video({
   const play = (isOrigin) => {
     videoRef.current.playVideo();
     if (isOrigin) {
-      socket.emit("VIDEO_CONTROLS", { url, type: "play"});
+      socket.emit("VIDEO_CONTROLS", { url, type: "play" });
     }
   };
 
@@ -62,7 +70,7 @@ export default function Video({
     if (!time) {
       time = videoRef.current.getCurrentTime();
     }
-    videoRef.current.seekTo(time);
+    videoRef.current.seekTo(time, true);
     if (isOrigin) {
       socket.emit("VIDEO_CONTROLS", { url, type: "sync", time });
     }
@@ -112,8 +120,8 @@ export default function Video({
           pause(false);
         } else if (control.type === "sync") {
           sync(false, control.time);
-        // } else if (control.type === "syncTime") {
-        //   videoRef.current.seekTo(control.time);
+          // } else if (control.type === "syncTime") {
+          //   videoRef.current.seekTo(control.time);
         }
       });
   }, [socket]);
@@ -141,7 +149,7 @@ export default function Video({
           onEnd={() => upNext()}
           onStateChange={(event) => {
             console.log(event.data);
-            if (event.data === -1) play(true);
+            if (event.data === -1) event.target.playVideo();
           }}
         />
       </div>

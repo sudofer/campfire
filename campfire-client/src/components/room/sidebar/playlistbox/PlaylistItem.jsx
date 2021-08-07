@@ -5,7 +5,8 @@ export default function PlayListItem({
   playList,
   index,
   setPlayList,
-  emitChosenOne
+  emitChosenOne,
+  removeFromPlayList,
 }) {
   const style = {
     width: "90px",
@@ -13,14 +14,15 @@ export default function PlayListItem({
   };
 
   return (
-    <li className="SearchItemBox" onClick={() => emitChosenOne(index)}>
+    <li className="SearchItemBox">
       <h5>{playListItem.title}</h5>
       <img
         style={style}
         src={playListItem.thumbnails.default.url}
         alt={playListItem.description}
       ></img>
-      {/* <button onClick={() => removeItemFromPlayList(playList, index)}>-</button> */}
+      <button onClick={() => removeFromPlayList(index)}>-</button>
+      <button onClick={() => emitChosenOne(index)}>PLAY</button>
     </li>
   );
 }
