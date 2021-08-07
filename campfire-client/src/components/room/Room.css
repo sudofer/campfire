@@ -14,6 +14,10 @@ body {
   min-width: 100vw;
 } 
 
+.sideBarContainer, sideBar {
+  border-left: 1px solid #f0f0f0;
+}
+
 .videoPlayer {
   display: flex;
   height: 100%;
@@ -27,7 +31,4 @@ img {
   height: 100%;
 }
 
-.sideBarContainer, sideBar {
-  border-left: 1px solid #f0f0f0;
-}
 
