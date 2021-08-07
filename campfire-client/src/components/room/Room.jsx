@@ -194,7 +194,13 @@ export default function Room() {
           />
         </div>
 
+
+
         <div className="sideBarContainer">
+          <div className="usersInRoom">
+            {roomUsers.length !== 0 &&
+              roomUsers.map((user) => <l1>{user.name}</l1>)}
+          </div>
           <Sidebar
             className='sideBar'
             addPlayListItem={addPlayListItem}
