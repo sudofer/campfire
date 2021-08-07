@@ -9,7 +9,6 @@ import Typography from '@material-ui/core/Typography';
 import SubscriptionsOutlinedIcon from '@material-ui/icons/SubscriptionsOutlined';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ScreenShareIcon from '@material-ui/icons/ScreenShare';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import './Home.css';
 
@@ -88,6 +87,9 @@ export default function Home() {
   const darkTheme = createTheme({
     palette: {
       type: 'dark',
+      primary: {
+        main: '#ffffff',
+      },
     },
   });
 
@@ -153,6 +155,7 @@ export default function Home() {
       </Container>
 
       <ThemeProvider theme={darkTheme}> 
+      
       <CssBaseline/>
 
       <div className="roomButtons">  
