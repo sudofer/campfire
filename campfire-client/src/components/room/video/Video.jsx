@@ -1,25 +1,38 @@
 import React, { useEffect, useState, useRef } from "react";
 import YouTube from "react-youtube";
-export default function Video({ socket, playList }) {
-  const [videoUrl, setVideoUrl] = React.useState("");
-  let videoCode;
-  if (videoUrl) {
-    videoCode = videoUrl.split("v=")[1].split("&")[0];
-  }
-  const checkElapsedTime = (e) => {
-    const duration = e.target.getDuration();
-    const currentTime = e.target.getCurrentTime();
-    if (currentTime / duration > 0.95) {
-      console.log("working...");
-    }
-  };
-  const [currentPos, setCurrentPos] = useState(0);
+export default function Video({
+  socket,
+  playList,
+  setPlayList,
+  url,
+  currentPlaying,
+  setCurrentPlaying,
+}) {
+  //Current videoURL of playlist
+  const [videoUrl, setVideoUrl] = useState("");
+  console.log("video URL", videoUrl);
+  console.log("socket id", socket && socket.id);
+
+  //Ref??
   const videoRef = useRef();
 
-  const onClick = (evt) => {
-    console.log(evt);
-  };
+  //Set current video Url
+  useEffect(() => {
+    if (playList.length === 0) {
+      setVideoUrl("");
+    } else {
+      if (playList[currentPlaying]) {
+        const newVideoUrl = playList[currentPlaying].link
+          .split("v=")[1]
+          .split("&")[0];
+        if (videoUrl !== newVideoUrl) {
+          setVideoUrl(newVideoUrl);
+        }
+      }
+    }
+  }, [currentPlaying, playList, videoUrl]);
 
+  //Reference the video on ready
   const referenceVideo = (event) => {
     videoRef.current = event.target;
     // videoRef.current.addEventListener("onclick", onClick);
@@ -27,101 +40,112 @@ export default function Video({ socket, playList }) {
     // const iFrame = videoRef.current.getIframe();
     // iFrame.onclick =(console.log);
   };
-  // video commands
-  const start = (isOrigin) => {
-    if (isOrigin) {
-      socket.emit("VIDEO_CONTROLS", "start");
-    }
-  };
 
-  let time = 0;
-
-  const play = (isOrigin, evt) => {
+  //Play video function
+  const play = (isOrigin) => {
     videoRef.current.playVideo();
-    //console.log(evt.target);
-    //
     if (isOrigin) {
-      socket.emit("VIDEO_CONTROLS", { type: "play", time: time });
+      socket.emit("VIDEO_CONTROLS", { url, type: "play"});
     }
   };
 
-  const pause = (isOrigin, evt) => {
+  //Pause video function
+  const pause = (isOrigin) => {
     videoRef.current.pauseVideo();
     if (isOrigin) {
-      socket.emit("VIDEO_CONTROLS", { type: "pause", time: time });
+      socket.emit("VIDEO_CONTROLS", { url, type: "pause" });
     }
-    console.log("PAUSE FUNCTION");
   };
 
-  const scroll = (isOrigin, evt) => {
-    let currentTime = videoRef.current.getCurrentTime();
-    console.log("-----------------**", evt);
-    videoRef.current.seekTo(currentTime);
+  //Sync video function
+  const sync = (isOrigin, time) => {
+    if (!time) {
+      time = videoRef.current.getCurrentTime();
+    }
+    videoRef.current.seekTo(time);
     if (isOrigin) {
-      socket.emit("VIDEOS_CONTROLS", { type: "scroll", time: currentTime });
+      socket.emit("VIDEO_CONTROLS", { url, type: "sync", time });
     }
   };
 
-  const end = () => {
-    console.log("END FUNCTION");
+  //Seek video function
+  // const syncTime = (isOrigin, time) => {
+  //   if (!time) {
+  //     time = videoRef.current.getCurrentTime();
+  //   }
+  //   if (isOrigin) {
+  //     socket.emit("VIDEO_CONTROLS", { url, type: "syncTime", time });
+  //   }
+  //   videoRef.current.playVideo();
+  // };
+
+  //Clear playlist on end and play next
+  const upNext = () => {
+    // setPlayList((prev) => [...prev.slice(1)]);
+    const nextPlayListIndex = currentPlaying + 1;
+    socket.emit("PLAYLIST_CONTROLS", {
+      url,
+      type: "upNext",
+      nextPlayListIndex,
+    });
   };
+
+  // const checkElapsedTime = (e) => {
+  //   const duration = e.target.getDuration();
+  //   const currentTime = e.target.getCurrentTime();
+  //   if (currentTime / duration > 0.95) {
+  //     console.log("working...");
+  //   }
+  // };
+  // const [currentPos, setCurrentPos] = useState(0);
+
+  // const end = () => {
+  //   console.log("END FUNCTION");
+  // };
+
+  useEffect(() => {
+    socket &&
+      socket.on("VIDEO_CONTROLS", (control) => {
+        if (control.type === "play") {
+          play(false);
+        } else if (control.type === "pause") {
+          pause(false);
+        } else if (control.type === "sync") {
+          sync(false, control.time);
+        // } else if (control.type === "syncTime") {
+        //   videoRef.current.seekTo(control.time);
+        }
+      });
+  }, [socket]);
 
   let opts = {
     height: "225", //810
     width: "400", //1440
     playerVars: {
       // https://developers.google.com/youtube/player_parameters
-      autoplay: 1,
+      // autoplay: 1,
       start: 0,
     },
   };
 
-  useEffect(() => {
-    socket &&
-      socket.on("VIDEO_CONTROLS", (control) => {
-        console.log(control, "*******");
-        if (control.type === "play") {
-          play(false);
-        } else if (control.type === "pause") {
-          pause(false);
-        } else if (control.type === "scroll") {
-          scroll(false);
-        }
-      });
-  }, [socket]);
-
-  useEffect(() => {
-    console.log("PLAYLIST HAS CHANGED");
-
-    if (playList.length === 1) {
-      console.log(playList[0].link);
-      setVideoUrl(playList[0].link);
-    }
-  }, [playList]);
-
   return (
     <>
       <div id="player">
-        {" "}
-        <input value={videoUrl} onChange={(e) => setVideoUrl(e.target.value)} />
+        {/* <input value={videoUrl} onChange={(e) => setVideoUrl(e.target.value)} /> */}
         <YouTube
           onReady={referenceVideo}
-          videoId={videoCode}
+          videoId={videoUrl}
           opts={opts}
-          //onPause={pause}
-          onEnd={end}
-          onClick={(evt) => scroll(true, evt)}
-        />{" "}
+          onPlay={() => play(true)}
+          onPause={() => pause(true)}
+          onEnd={() => upNext()}
+          onStateChange={(event) => {
+            console.log(event.data);
+            if (event.data === -1) play(true);
+          }}
+        />
       </div>
-      <button onClick={(evt) => play(true, evt)}>play </button>
-      <button onClick={(evt) => pause(true, evt)}>pause </button>
-      <button
-        onClick={() =>
-          setVideoUrl("https://www.youtube.com/watch?v=EmFJPCDMKTw")
-        }
-      >
-        start{" "}
-      </button>
+      <button onClick={() => sync(true)}>sync</button>
     </>
   );
 }
