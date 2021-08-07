@@ -5,6 +5,8 @@
   height: 100vh;
   background-color: #ffffff;
   font-family: Helvetica;
+  border: 1px solid black;
+
 }
 
 .container {
@@ -13,6 +15,7 @@
   justify-content: space-between;
   background: #FFFFFF;
   border-radius: 8px;
+  border: 1px solid black;
   height: 60%;
   width: 35%;
 }
