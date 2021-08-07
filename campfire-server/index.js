@@ -94,8 +94,16 @@ io.on("connection", (socket) => {
     io.in(url).emit("NEW_PLAY_LIST_ITEM", playListItem);
   });
 
-  socket.on("VIDEO_CONTROLS", ({ type, time, url }) => {
-    console.log("server ln 73*_____", { type, time });
+  socket.on("PLAYLIST_CONTROLS", ({ url, type, nextPlayListIndex }) => {
+    if (type === "upNext") {
+      io.in(url).emit("PLAYLIST_CONTROLS", { type, nextPlayListIndex })
+    } else if (type === "chosenOne") {
+      console.log(nextPlayListIndex);
+      io.in(url).emit("PLAYLIST_CONTROLS", { type, nextPlayListIndex })
+    }
+  })
+
+  socket.on("VIDEO_CONTROLS", ({url, type, time}) => {
     io.in(url).emit("VIDEO_CONTROLS", { type, time });
   });
 

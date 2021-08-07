@@ -3,6 +3,7 @@ import SideBarNav from "./SideBarNav/SideBarNav";
 import SearchBox from "./searchbox";
 import Chatbox from "./chatbox";
 import PlaylistBox from "./playlistbox";
+import './index.css'
 export default function Sidebar(props) {
   const {
     addPlayListItem,
@@ -16,6 +17,9 @@ export default function Sidebar(props) {
     searchTerm,
     setSearchTerm,
     playList,
+    setPlayList,
+    setCurrentPlaying,
+    emitChosenOne
   } = props;
 
   const [value, setValue] = useState(0);
@@ -26,26 +30,35 @@ export default function Sidebar(props) {
 
   return (
     <>
+    <div className="sidebar">
       <SideBarNav value={value} handleChange={handleChange} />
       {value === 0 && (
         <Chatbox
-          name={name}
-          message={message}
-          messages={messages}
-          setMessage={setMessage}
-          sendMessage={sendMessage}
+        name={name}
+        message={message}
+        messages={messages}
+        setMessage={setMessage}
+        sendMessage={sendMessage}
         />
       )}
-      {value === 1 && <PlaylistBox playList={playList} />}
+      {value === 1 && (
+        <PlaylistBox
+          setCurrentPlaying={setCurrentPlaying}
+          playList={playList}
+          setPlayList={setPlayList}
+          emitChosenOne={emitChosenOne}
+        />
+      )}
       {value === 2 && (
         <SearchBox
-          addPlayListItem={addPlayListItem}
-          results={results}
-          url={url}
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
+        addPlayListItem={addPlayListItem}
+        results={results}
+        url={url}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
         />
-      )}
+        )}
+      </div>
     </>
   );
 }

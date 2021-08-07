@@ -54,6 +54,9 @@ export default function Room() {
   //State for youtube playlist
   const [playList, setPlayList] = useState([]);
 
+  //State for current playing video index
+  const [currentPlaying, setCurrentPlaying] = useState(0);
+
   //Server location for socket connection
   const ENDPOINT = "ws://localhost:3002";
 
@@ -101,6 +104,14 @@ export default function Room() {
         setRoomUsers((prev) => [...users]);
       });
 
+      socket.on("PLAYLIST_CONTROLS", ({ type, nextPlayListIndex }) => {
+        if (type === "upNext") {
+          setCurrentPlaying(nextPlayListIndex);
+        } else if (type === "chosenOne") {
+          setCurrentPlaying(nextPlayListIndex);
+        }
+      })
+
       return () => {
         socket.disconnect();
       };
@@ -116,13 +127,6 @@ export default function Room() {
       setMessage("");
     }
   };
-
-  // useEffect for users array
-  useEffect(() => {
-    setTimeout(() => {
-      console.log(roomUsers);
-    }, 50);
-  }, [roomUsers]);
 
   //Youtube search feature
   useEffect(() => {
@@ -145,12 +149,12 @@ export default function Room() {
     socket.emit("NEW_PLAY_LIST_ITEM", { url, title, link, thumbnails, id });
   };
 
-  // Receive Playlist Item
-  // useEffect(() => {
-  //   socket.on("NEW_PLAY_LIST_ITEM", (playListItem) => {
-  //     setPlayList(prev => [...prev, playListItem]);
-  //   })
-  // }, [playList]);
+  //Choose video from list
+  const emitChosenOne = (index) => {
+    console.log("IM THE CHOSEN ONE");
+    console.log("aaa", index);
+    socket.emit("PLAYLIST_CONTROLS", { url, type: "chosenOne", nextPlayListIndex: index });
+  }
 
   return (
     <>
@@ -160,7 +164,14 @@ export default function Room() {
             src="https://github.com/htkim94/campfire/blob/main/campfire-client/public/docs/yt_image.png?raw=true"
             alt="youtube screenshot"
           /> */}
-          <Video socket={socket} playList={playList} url={url} />
+          <Video
+            socket={socket}
+            playList={playList}
+            setPlayList={setPlayList}
+            url={url}
+            currentPlaying={currentPlaying}
+            setCurrentPlaying={setCurrentPlaying}
+          />
         </div>
         <div>
           {roomUsers.length !== 0 &&
@@ -171,7 +182,7 @@ export default function Room() {
             addPlayListItem={addPlayListItem}
             playList={playList}
             name={name}
-            // url={url}
+            setPlayList={setPlayList}
             message={message}
             messages={messages}
             setMessage={setMessage}
@@ -179,6 +190,8 @@ export default function Room() {
             results={results}
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}
+            setCurrentPlaying={setCurrentPlaying}
+            emitChosenOne={emitChosenOne}
           />
         </div>
       </div>
