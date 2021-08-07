@@ -33,6 +33,9 @@ export default function Room() {
   //   }
   // }));
 
+  //State for users in a room
+  const [roomUsers, setRoomUsers] = useState([]);
+  console.log(roomUsers);
   // const classes = useStyles();
   const history = useHistory();
   const [socket, setSocket] = useState(undefined);
@@ -90,6 +93,14 @@ export default function Room() {
         setPlayList((prev) => [...prev, playListItem]);
       });
 
+      socket.on("ADD_USER_DATA", ({ users }) => {
+        setRoomUsers((prev) => [...users]);
+      });
+
+      socket.on("DELETE_USER_DATA", ({ users }) => {
+        setRoomUsers((prev) => [...users]);
+      });
+
       return () => {
         socket.disconnect();
       };
@@ -106,7 +117,12 @@ export default function Room() {
     }
   };
 
-  // console.log(message, messages);
+  // useEffect for users array
+  useEffect(() => {
+    setTimeout(() => {
+      console.log(roomUsers);
+    }, 50);
+  }, [roomUsers]);
 
   //Youtube search feature
   useEffect(() => {
@@ -146,7 +162,10 @@ export default function Room() {
           /> */}
           <Video socket={socket} playList={playList} url={url} />
         </div>
-
+        <div>
+          {roomUsers.length !== 0 &&
+            roomUsers.map((user) => <l1>{user.name}</l1>)}
+        </div>
         <div className="sideBarNav">
           <Sidebar
             addPlayListItem={addPlayListItem}
