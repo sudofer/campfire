@@ -193,12 +193,10 @@ export default function Room() {
             setCurrentPlaying={setCurrentPlaying}
           />
         </div>
-        <div>
-          {roomUsers.length !== 0 &&
-            roomUsers.map((user) => <l1>{user.name}</l1>)}
-        </div>
-        <div className="sideBarNav">
+
+        <div className="sideBarContainer">
           <Sidebar
+            className='sideBar'
             addPlayListItem={addPlayListItem}
             playList={playList}
             name={name}
