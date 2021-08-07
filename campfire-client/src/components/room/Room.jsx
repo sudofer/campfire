@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 // import axios from "axios";
 import Video from "./video/Video";
 import Sidebar from "./sidebar";
@@ -57,7 +57,7 @@ export default function Room() {
   //Initialize socket
   useEffect(() => {
     setSocket(io(ENDPOINT));
-  }, [])
+  }, []);
 
   //socket handlers
   useEffect(() => {
@@ -66,26 +66,26 @@ export default function Room() {
       const urlParams = new URLSearchParams(window.location.search);
       const userName = urlParams.get("name");
       const roomUrl = urlParams.get("url");
-  
+
       setName(userName);
       setURL(roomUrl);
-  
+
       socket.emit("CREATE_ROOM", { name: userName, url: roomUrl });
-  
+
       socket.on("USER_ALREADY_EXIST", ({ error }) => {
         alert(error);
         console.log(error);
         history.push("/");
       });
-  
+
       socket.on("MESSAGE", (message) => {
         setMessages((prev) => [...prev, message]);
       });
-  
+
       socket.on("EXISTING_PLAY_LIST", (playList) => {
         setPlayList([...playList]);
       });
-  
+
       socket.on("NEW_PLAY_LIST_ITEM", (playListItem) => {
         setPlayList((prev) => [...prev, playListItem]);
       });
@@ -144,7 +144,7 @@ export default function Room() {
             src="https://github.com/htkim94/campfire/blob/main/campfire-client/public/docs/yt_image.png?raw=true"
             alt="youtube screenshot"
           /> */}
-          <Video socket={socket} playList={playList} />
+          <Video socket={socket} playList={playList} url={url} />
         </div>
 
         <div className="sideBarNav">

@@ -6,7 +6,3 @@ a {
 a:hover {
   color: darkgrey;
 } 
-
-.MuiButtonBase-root MuiButton-root MuiButton-text makeStyles-menuButton-3 MuiButton-colorInherit {
-  color: #FFFFFF;
-}

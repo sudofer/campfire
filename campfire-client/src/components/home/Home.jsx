@@ -2,17 +2,16 @@ import React, { useState } from "react";
 import { useHistory } from 'react-router-dom';
 import { Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import {Container} from '@material-ui/core'; // this must be imported last
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import SubscriptionsOutlinedIcon from '@material-ui/icons/SubscriptionsOutlined';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ScreenShareIcon from '@material-ui/icons/ScreenShare';
-import theme from "../../theme";
-import './Home.css';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import './Home.css';
 
 export default function Home() {
   const [url, setUrl] = useState("");
@@ -49,7 +48,7 @@ export default function Home() {
   const useStyles = makeStyles(theme => ({
     root: {
       padding: theme.spacing(12, 4),
-    },
+      },
     card: {
       height: '100%',
       width: '100%',
@@ -76,6 +75,13 @@ export default function Home() {
       size: 'large',
       color: '#fff',
     },
+    input: {
+      fontSize: '20px',
+    },
+    mainButton: {
+      fontSize: '24px',
+      color: 'white',
+    }
   }));
 
   // dialog pop up boxes set to dark mode
@@ -84,6 +90,9 @@ export default function Home() {
     () =>
       createTheme({
         palette: {
+          primary: {
+            main: '#ffffff',
+          },
           type: prefersDarkMode ? 'dark' : 'light',
         },
       }),
@@ -157,7 +166,7 @@ export default function Home() {
       <div className="roomButtons">  
         {/* Create Room button */}
         <div className="create-room">
-          <Button size="large" onClick={() => handleClick('create')}>Create room</Button>
+          <Button size="large" onClick={() => handleClick('create')} className={classes.mainButton}>Create room</Button>
           <Dialog open={openType === 'create'} onClose={handleClose} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title">Create Room</DialogTitle>
             <DialogContent>
@@ -174,9 +183,9 @@ export default function Home() {
                 value={name}
                 onChange={event => setName(event.target.value)}
                 fullWidth
+                InputLabelProps={{ style: { color: 'white' } }}
               />
               <TextField
-                autoFocus
                 margin="dense"
                 id="url-create"
                 label="Room URL"
@@ -184,6 +193,7 @@ export default function Home() {
                 type="text"
                 name="url"
                 fullWidth
+                InputLabelProps={{ style: { color: 'white' } }}
               />
             </DialogContent>
             <DialogActions>
@@ -199,7 +209,7 @@ export default function Home() {
 
         {/* Join Room button */}
         <div className="join-room">
-        <Button size="large" onClick={() => handleClick('join')}>Join room</Button>
+        <Button size="large" onClick={() => handleClick('join')} className={classes.mainButton}>Join room</Button>
           <Dialog open={openType === "join"} onClose={handleClose} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title">Join Room</DialogTitle>
             <DialogContent>
@@ -215,16 +225,19 @@ export default function Home() {
                 name="name"
                 value={name}
                 onChange={event => setName(event.target.value)}
+                InputLabelProps={{ style: { color: 'white' } }}
+                className={classes.input}
                 fullWidth
               />
               <TextField
-                autoFocus
                 margin="dense"
                 id="url-join"
                 label="Room URL"
                 type="text"
                 value={url}
                 onChange={event => setUrl(event.target.value)}
+                InputLabelProps={{ style: { color: 'white' } }}
+                className={classes.input}
                 fullWidth
               />
             </DialogContent>

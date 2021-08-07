@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import YouTube from "react-youtube";
-export default function Video({ socket, playList }) {
+export default function Video({ socket, playList, url }) {
   const [videoUrl, setVideoUrl] = React.useState("");
   let videoCode;
   if (videoUrl) {
@@ -41,14 +41,14 @@ export default function Video({ socket, playList }) {
     //console.log(evt.target);
     //
     if (isOrigin) {
-      socket.emit("VIDEO_CONTROLS", { type: "play", time: time });
+      socket.emit("VIDEO_CONTROLS", { type: "play", time: time, url });
     }
   };
 
   const pause = (isOrigin, evt) => {
     videoRef.current.pauseVideo();
     if (isOrigin) {
-      socket.emit("VIDEO_CONTROLS", { type: "pause", time: time });
+      socket.emit("VIDEO_CONTROLS", { type: "pause", time: time, url });
     }
     console.log("PAUSE FUNCTION");
   };
@@ -58,7 +58,11 @@ export default function Video({ socket, playList }) {
     console.log("-----------------**", evt);
     videoRef.current.seekTo(currentTime);
     if (isOrigin) {
-      socket.emit("VIDEOS_CONTROLS", { type: "scroll", time: currentTime });
+      socket.emit("VIDEOS_CONTROLS", {
+        type: "scroll",
+        time: currentTime,
+        url,
+      });
     }
   };
 
@@ -73,6 +77,7 @@ export default function Video({ socket, playList }) {
       // https://developers.google.com/youtube/player_parameters
       autoplay: 1,
       start: 0,
+      controls: 0,
     },
   };
 
@@ -102,7 +107,6 @@ export default function Video({ socket, playList }) {
   return (
     <>
       <div id="player">
-        {" "}
         <input value={videoUrl} onChange={(e) => setVideoUrl(e.target.value)} />
         <YouTube
           onReady={referenceVideo}
@@ -111,7 +115,7 @@ export default function Video({ socket, playList }) {
           //onPause={pause}
           onEnd={end}
           onClick={(evt) => scroll(true, evt)}
-        />{" "}
+        />
       </div>
       <button onClick={(evt) => play(true, evt)}>play </button>
       <button onClick={(evt) => pause(true, evt)}>pause </button>
@@ -120,7 +124,7 @@ export default function Video({ socket, playList }) {
           setVideoUrl("https://www.youtube.com/watch?v=EmFJPCDMKTw")
         }
       >
-        start{" "}
+        start
       </button>
     </>
   );

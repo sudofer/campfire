@@ -17,20 +17,19 @@ const useStyles = makeStyles(() => ({
     fontWeight: 600,
     color: "#FFFEFE",
     textAlign: "left",
+    fontSize: '30px',
+    letterSpacing: `3px`
   },
   menuButton: {
     fontFamily: "Open Sans, sans-serif",
     fontWeight: 700,
-    size: "18px",
+    fontSize: '20px',
     marginLeft: "38px",
   },
   toolbar: {
     display: "flex",
     justifyContent: "space-between",
   },
-  '&.Link': {
-    color: '#fff'
-  }
 }));
 
 const headersData = [
@@ -87,11 +86,10 @@ export default function Navbar() {
   };
                      
   return (
-    <header>
+    <>
       <AppBar position="fixed" className={header}>{displayDesktop()}</AppBar>
       <Toolbar />
-
-    </header>
+    </>
   );
 }
 
