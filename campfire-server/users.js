@@ -45,7 +45,11 @@ const getRoomByUrl = (data, url) => data.find((d) => d.url === url);
 
 const getRoomIndex = (data, url) => data.findIndex((d) => d.url === url);
 
-const getUsersInRoom = (users, url) => users.filter((user) => user.url === url);
+const getUsersInRoom = (data, url) => {
+  const room = getRoomByUrl(data, url);
+  const users = room.users;
+  console.log(users);
+};
 
 module.exports = {
   adminChatWelcome,

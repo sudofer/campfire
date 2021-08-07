@@ -33,6 +33,9 @@ export default function Room() {
   //   }
   // }));
 
+  //State for users in a room
+  const [roomUsers, setRoomUsers] = useState([]);
+  console.log(roomUsers);
   // const classes = useStyles();
   const history = useHistory();
   const [socket, setSocket] = useState(undefined);
@@ -91,6 +94,14 @@ export default function Room() {
 
       socket.on("NEW_PLAY_LIST_ITEM", (playListItem) => {
         setPlayList((prev) => [...prev, playListItem]);
+      });
+
+      socket.on("ADD_USER_DATA", ({ users }) => {
+        setRoomUsers((prev) => [...users]);
+      });
+
+      socket.on("DELETE_USER_DATA", ({ users }) => {
+        setRoomUsers((prev) => [...users]);
       });
 
       socket.on("PLAYLIST_CONTROLS", ({ type, nextPlayListIndex }) => {
@@ -162,7 +173,10 @@ export default function Room() {
             setCurrentPlaying={setCurrentPlaying}
           />
         </div>
-
+        <div>
+          {roomUsers.length !== 0 &&
+            roomUsers.map((user) => <l1>{user.name}</l1>)}
+        </div>
         <div className="sideBarNav">
           <Sidebar
             addPlayListItem={addPlayListItem}
