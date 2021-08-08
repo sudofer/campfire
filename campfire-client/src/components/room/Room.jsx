@@ -213,6 +213,7 @@ export default function Room() {
             setCurrentPlaying={setCurrentPlaying}
             emitChosenOne={emitChosenOne}
             removeFromPlayList={removeFromPlayList}
+            roomUsers={roomUsers}
           />
         </div>
       </div>
