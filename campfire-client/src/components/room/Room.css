@@ -46,9 +46,9 @@ body {
   padding-right: 3%;
  }
 
-.usersInRoomTitle {
+.inviteTitle {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   text-transform: uppercase;
   font-family: 'Helvetica Neue';
@@ -58,16 +58,62 @@ body {
 
 .userIcon {
   position: relative;
-  top: 5px;
+  top: 7px;
   left: 5px;
 }
 
-.usersInRoomList {
-  display: flex;
-  align-self: flex-end;
-  padding: 3%;
-  width: 100%;
-  font-size: 1.2em;
+.nowPlayingSection {
+  padding-bottom: 3%;
+  padding-top: 3%;
+  padding-left: 3%;
+  padding-right: 3%;
 }
 
+/* .nowPlayingLabel, .nowPlayingVideoTitle {
+  display: inline-block;
+} */
 
+.nowPlayingLabel {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  /* text-transform: uppercase; */
+  font-family: 'Helvetica Neue';
+  color: #ffffff;
+}
+
+.nowPlayingVideoTitle {
+  /* display: flex;
+  align-items: flex-start;
+  word-wrap: break-word; */
+  /* padding: 6px 0px;
+  line-height: 1.75;
+  min-height: 48px; */
+  /* align-items: center; */
+  font-weight: 300;
+  font-style: italic;
+}
+
+/* 
+.nowPlayingLabel {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  text-transform: uppercase;
+  font-family: 'Helvetica Neue';
+  padding: 8px;
+  color: #ffffff;
+  padding-bottom: 0;
+  padding-top: 0;
+
+}
+
+.nowPlayingVideoTitle {
+  display: flex;
+  align-self: flex-end;
+  font-weight: 300;
+  font-style: italic;
+  padding-left: 5%;
+  width: 100%;
+  font-size: 1.2em;
+} */

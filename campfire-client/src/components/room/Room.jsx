@@ -6,7 +6,7 @@ import Sidebar from "./sidebar";
 import { io } from "socket.io-client";
 import search from "youtube-search";
 import LinkIcon from '@material-ui/icons/Link';
-import HomeIcon from '@material-ui/icons/Home';
+import MusicVideoIcon from '@material-ui/icons/MusicVideo';
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 
 import "./Room.css";
@@ -187,13 +187,13 @@ export default function Room() {
 
         <div className="sideBarContainer">
           <div className="usersInRoomContainer">
-            <div className="usersInRoomTitle">
-              <div>
+            <div className="inviteTitle">
+              {/* <div>
                 <HomeIcon className="userIcon"/>
                 <span className="MuiTab-root">
                 Users
                 </span>
-              </div>
+              </div> */}
               <div>
                 <LinkIcon className="userIcon"/>
                 <span className="MuiTab-root">
@@ -201,11 +201,21 @@ export default function Room() {
                 </span>
               </div>
             </div>
-
-            <div className="usersInRoomList">
+            {/* <div className="usersInRoomList">
             {roomUsers.length !== 0 &&
               roomUsers.map((user) => <li>{user.name}</li> )}
-            </div>
+            </div>*/}
+          </div> 
+
+          <div className="nowPlayingSection">
+              <MusicVideoIcon className="userIcon"/>
+              <span className="MuiTab-root">
+                Now Playing
+              </span>
+              <span className="nowPlayingVideoTitle">
+              Hello from the other side - Adele
+              </span>  
+
           </div>
           <Sidebar
             className='sideBar'
