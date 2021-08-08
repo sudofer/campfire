@@ -1,17 +1,16 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import YouTube from "react-youtube";
-import './Video.css'
+import "./Video.css";
 export default function Video({
-  socket,
   playList,
-  url,
   currentPlaying,
+  referenceVideo,
+  play,
+  pause,
+  upNext,
 }) {
   //Current videoURL of playlist
   const [videoUrl, setVideoUrl] = useState("");
-
-  //Ref??
-  const videoRef = useRef();
 
   //Set current video Url
   useEffect(() => {
@@ -29,64 +28,8 @@ export default function Video({
     }
   }, [currentPlaying]);
 
-  //Reference the video on ready
-  const referenceVideo = (event) => {
-    videoRef.current = event.target;
-  };
-
-  //Play video function
-  const play = (isOrigin) => {
-    videoRef.current.playVideo();
-    if (isOrigin) {
-      socket.emit("VIDEO_CONTROLS", { url, type: "play" });
-    }
-  };
-
-  //Pause video function
-  const pause = (isOrigin) => {
-    videoRef.current.pauseVideo();
-    if (isOrigin) {
-      socket.emit("VIDEO_CONTROLS", { url, type: "pause" });
-    }
-  };
-
-  //Sync video function
-  const sync = (isOrigin, time) => {
-    if (!time) {
-      time = videoRef.current.getCurrentTime();
-    }
-    videoRef.current.seekTo(time, true);
-    if (isOrigin) {
-      socket.emit("VIDEO_CONTROLS", { url, type: "sync", time });
-    }
-  };
-
-  //Play next video
-  const upNext = () => {
-    let nextPlayListIndex = currentPlaying + 1;
-    if (!playList[nextPlayListIndex]) nextPlayListIndex = null;
-    socket.emit("PLAYLIST_CONTROLS", {
-      url,
-      type: "upNext",
-      index: nextPlayListIndex,
-    });
-  };
-
-  useEffect(() => {
-    socket &&
-      socket.on("VIDEO_CONTROLS", (control) => {
-        if (control.type === "play") {
-          play(false);
-        } else if (control.type === "pause") {
-          pause(false);
-        } else if (control.type === "sync") {
-          sync(false, control.time);
-        }
-      });
-  }, [socket]);
-
   let opts = {
-    classname: 'player',
+    classname: "player",
     height: "780", //225
     width: "1410", //400
     playerVars: {
@@ -99,8 +42,8 @@ export default function Video({
     <>
       <div class="player">
         <YouTube
-          className='youtubePlayer'
-          onReady={referenceVideo}
+          className="youtubePlayer"
+          onReady={(event) => referenceVideo(event)}
           videoId={videoUrl}
           opts={opts}
           onPlay={() => play(true)}
@@ -111,7 +54,7 @@ export default function Video({
           }}
         />
       </div>
-      <button onClick={() => sync(true)}>sync</button>
+      {/* <button onClick={() => sync(true)}>sync</button> */}
     </>
   );
 }
