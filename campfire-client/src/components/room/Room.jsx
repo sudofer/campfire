@@ -194,12 +194,12 @@ export default function Room() {
 
           <div className="nowPlayingSection">
             <MusicVideoIcon className="userIcon" />
-            {currentPlaying !== null ? (
+            {currentPlaying !== null && playList.length !== 0 ? (
               <>
                 <span className="MuiTab-root">Now Playing</span>
                 <span className="nowPlayingVideoTitle">
                   {playList[currentPlaying].title}
-                </span>{" "}
+                </span>
               </>
             ) : (
               <span></span>
