@@ -54,7 +54,7 @@ io.on("connection", (socket) => {
         adminChatJoin(socket, url, name);
         socket.emit("EXISTING_PLAY_LIST", {
           playList: data[roomIndex].playList,
-          currentPlaying: data[roomIndex].currentPlaying,
+          currentPlaying: null,
         });
       } else {
         socket.emit("USER_ALREADY_EXIST", { error: "USERNAME ALREADY EXIST" });

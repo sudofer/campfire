@@ -5,19 +5,18 @@ import Video from "./video/Video";
 import Sidebar from "./sidebar";
 import { io } from "socket.io-client";
 import search from "youtube-search";
-import LinkIcon from '@material-ui/icons/Link';
-import MusicVideoIcon from '@material-ui/icons/MusicVideo';
+import LinkIcon from "@material-ui/icons/Link";
+import MusicVideoIcon from "@material-ui/icons/MusicVideo";
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 
 import "./Room.css";
 
 export default function Room() {
-
   const darkTheme = createTheme({
     palette: {
-      type: 'dark',
+      type: "dark",
       primary: {
-        main: '#ffffff',
+        main: "#ffffff",
       },
     },
   });
@@ -160,7 +159,7 @@ export default function Room() {
 
   return (
     <>
-     <ThemeProvider theme={darkTheme}/> 
+      <ThemeProvider theme={darkTheme} />
 
       <div className="container">
         <div className="video-player">
@@ -182,31 +181,32 @@ export default function Room() {
                 Users
                 </span>
               </div> */}
-              <div>
-                <LinkIcon className="userIcon"/>
-                <span className="MuiTab-root">
-                  Invite
-                </span>
-              </div>
+              <button onClick={() => navigator.clipboard.writeText(url)}>
+                <LinkIcon className="userIcon" />
+                <span className="MuiTab-root">Copy Invite URL</span>
+              </button>
             </div>
             {/* <div className="usersInRoomList">
             {roomUsers.length !== 0 &&
               roomUsers.map((user) => <li>{user.name}</li> )}
             </div>*/}
-          </div> 
+          </div>
 
           <div className="nowPlayingSection">
-              <MusicVideoIcon className="userIcon"/>
-              <span className="MuiTab-root">
-                Now Playing
-              </span>
-              <span className="nowPlayingVideoTitle">
-              Hello from the other side - Adele
-              </span>  
-
+            <MusicVideoIcon className="userIcon" />
+            {currentPlaying !== null && playList.length !== 0 ? (
+              <>
+                <span className="MuiTab-root">Now Playing</span>
+                <span className="nowPlayingVideoTitle">
+                  {playList[currentPlaying].title}
+                </span>
+              </>
+            ) : (
+              <span></span>
+            )}
           </div>
           <Sidebar
-            className='sideBar'
+            className="sideBar"
             addPlayListItem={addPlayListItem}
             playList={playList}
             name={name}
