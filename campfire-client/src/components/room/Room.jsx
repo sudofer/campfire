@@ -181,10 +181,10 @@ export default function Room() {
                 Users
                 </span>
               </div> */}
-              <div>
+              <button onClick={() => navigator.clipboard.writeText(url)}>
                 <LinkIcon className="userIcon" />
-                <span className="MuiTab-root">Invite</span>
-              </div>
+                <span className="MuiTab-root">Copy Invite URL</span>
+              </button>
             </div>
             {/* <div className="usersInRoomList">
             {roomUsers.length !== 0 &&
