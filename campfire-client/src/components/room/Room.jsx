@@ -5,33 +5,22 @@ import Video from "./video/Video";
 import Sidebar from "./sidebar";
 import { io } from "socket.io-client";
 import search from "youtube-search";
-// import { sizing } from '@material-ui/system';
-// import Container from '@material-ui/core/Container';
+import LinkIcon from '@material-ui/icons/Link';
+import HomeIcon from '@material-ui/icons/Home';
+import { createTheme, ThemeProvider } from "@material-ui/core/styles";
+
 import "./Room.css";
 
 export default function Room() {
-  // const useStyles = makeStyles(theme => ({
-  //   container: {
-  //     height: '100%',
-  //     width: '100%',
-  //     display: 'flex',
-  //     flexDirection: 'row',
-  //     alignItems: 'flex-start',
-  //     border: '1px solid black',
-  //     borderRadius: '5px',
-  //     textAlign: 'center',
-  //   },
-  //   videoPlayer: {
-  //     width: '70%',
-  //   },
-  //   sideBarNav: {
-  //     width: '30%',
-  //   },
-  //   img: {
-  //     height: '65%',
-  //     width: '65%',
-  //   }
-  // }));
+
+  const darkTheme = createTheme({
+    palette: {
+      type: 'dark',
+      primary: {
+        main: '#ffffff',
+      },
+    },
+  });
 
   //State for users in a room
   const [roomUsers, setRoomUsers] = useState([]);
@@ -178,6 +167,8 @@ export default function Room() {
 
   return (
     <>
+     <ThemeProvider theme={darkTheme}/> 
+
       <div className="container">
         <div className="video-player">
           {/* <img
@@ -194,12 +185,27 @@ export default function Room() {
           />
         </div>
 
-
-
         <div className="sideBarContainer">
-          <div className="usersInRoom">
+          <div className="usersInRoomContainer">
+            <div className="usersInRoomTitle">
+              <div>
+                <HomeIcon className="userIcon"/>
+                <span className="MuiTab-root">
+                Users
+                </span>
+              </div>
+              <div>
+                <LinkIcon className="userIcon"/>
+                <span className="MuiTab-root">
+                  Invite
+                </span>
+              </div>
+            </div>
+
+            <div className="usersInRoomList">
             {roomUsers.length !== 0 &&
-              roomUsers.map((user) => <l1>{user.name}</l1>)}
+              roomUsers.map((user) => <li>{user.name}</li> )}
+            </div>
           </div>
           <Sidebar
             className='sideBar'

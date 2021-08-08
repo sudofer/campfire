@@ -127,8 +127,9 @@ export default function Video({
   }, [socket]);
 
   let opts = {
-    // height: "810em", //225
-    // width: "1440em", //400
+    classname: 'player',
+    height: "810", //225
+    width: "1440", //400
     playerVars: {
       // https://developers.google.com/youtube/player_parameters
       // autoplay: 1,

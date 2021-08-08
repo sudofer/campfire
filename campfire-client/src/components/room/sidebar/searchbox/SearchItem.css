@@ -2,3 +2,41 @@
   border: 3px solid black;
   margin-bottom: 3px;
 }
+
+.form {
+  display: flex;
+  align-self: flex-end;
+  border-top: 1px solid rgba(225, 225, 225, 0.2);
+  width: 100%;
+  background: none;
+}
+
+.search-controls {
+  border: none;
+  border-radius: 0;
+  padding: 5%;
+  width: 100%;
+  font-size: 1.2em;
+  background: none;
+  color: #ffffff;
+}
+
+input:focus, textarea:focus, select:focus{
+  outline: none;
+  background: none;
+}
+
+::placeholder {
+  color: #ffffff;
+}
+
+.searchButton {
+  color: #fff !important;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  display: inline-block;
+  border: none;
+  width: 20%;
+}
