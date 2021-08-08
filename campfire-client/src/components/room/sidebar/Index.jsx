@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import SideBarNav from "./SideBarNav/SideBarNav";
 import SearchBox from "./searchbox";
 import Chatbox from "./chatbox";
+import UsersBox from "./UsersBox/UsersBox";
 import PlaylistBox from "./playlistbox";
 import "./index.css";
 export default function Sidebar(props) {
@@ -21,6 +22,7 @@ export default function Sidebar(props) {
     setCurrentPlaying,
     emitChosenOne,
     removeFromPlayList,
+    roomUsers,
   } = props;
 
   const [value, setValue] = useState(0);
@@ -60,6 +62,7 @@ export default function Sidebar(props) {
             setSearchTerm={setSearchTerm}
           />
         )}
+        {value === 3 && <UsersBox roomUsers={roomUsers} />}
       </div>
     </>
   );
