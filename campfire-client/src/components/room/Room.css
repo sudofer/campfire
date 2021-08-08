@@ -1,6 +1,6 @@
 body {
-  background-color: #003049;
-  display:flex;
+  background: rgb(2,0,36);
+  background: linear-gradient(156deg, rgba(2,0,36,1) 1%, rgba(252,191,73,1) 78%, rgba(252,191,73,1) 79%, rgba(214,40,40,1) 100%);
 }
 
 /* .App {
@@ -14,21 +14,106 @@ body {
   min-width: 100vw;
 } 
 
-.sideBarContainer, sideBar {
-  border-left: 1px solid #f0f0f0;
+.sideBarContainer, .sideBar {
+  border-left: 1px solid rgba(225, 225, 225, 0.2);
+  border-top: 1px solid rgba(225, 225, 225, 0.2);
 }
 
-.videoPlayer {
+.player {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  padding-bottom: 56.25%;
+  height: 0;
+}
+
+.player iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.usersInRoomContainer {
+  list-style-type: none;
+  border-left: 1px solid rgba(225, 225, 225, 0.2);
+  border-bottom: 1px solid rgba(225, 225, 225, 0.2);
+  font-family: 'Roboto', sans-serif;
+  padding-bottom: 3%;
+  padding-top: 3%;
+  padding-left: 3%;
+  padding-right: 3%;
+ }
+
+.inviteTitle {
   display: flex;
-  height: 100%;
-  width: 100%;
-  margin-right: 3em;  
+  justify-content: flex-end;
+  align-items: center;
+  text-transform: uppercase;
+  font-family: 'Helvetica Neue';
+  padding: 0;
+  color: #ffffff;
+}
+
+.userIcon {
+  position: relative;
+  top: 7px;
+  left: 5px;
+}
+
+.nowPlayingSection {
+  padding-bottom: 3%;
+  padding-top: 3%;
+  padding-left: 3%;
+  padding-right: 3%;
+}
+
+/* .nowPlayingLabel, .nowPlayingVideoTitle {
+  display: inline-block;
+} */
+
+.nowPlayingLabel {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  /* text-transform: uppercase; */
+  font-family: 'Helvetica Neue';
+  color: #ffffff;
+}
+
+.nowPlayingVideoTitle {
+  /* display: flex;
+  align-items: flex-start;
+  word-wrap: break-word; */
+  /* padding: 6px 0px;
+  line-height: 1.75;
+  min-height: 48px; */
+  /* align-items: center; */
+  font-weight: 300;
+  font-style: italic;
+}
+
+/* 
+.nowPlayingLabel {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  text-transform: uppercase;
+  font-family: 'Helvetica Neue';
+  padding: 8px;
+  color: #ffffff;
+  padding-bottom: 0;
+  padding-top: 0;
 
 }
 
-img {
+.nowPlayingVideoTitle {
+  display: flex;
+  align-self: flex-end;
+  font-weight: 300;
+  font-style: italic;
+  padding-left: 5%;
   width: 100%;
-  height: 100%;
-}
-
-
+  font-size: 1.2em;
+} */

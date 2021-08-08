@@ -24,6 +24,7 @@ const useStyles = makeStyles(() => ({
     fontWeight: 700,
     fontSize: '20px',
     marginLeft: "38px",
+    color: '#FFFFFF'
   },
   toolbar: {
     display: "flex",

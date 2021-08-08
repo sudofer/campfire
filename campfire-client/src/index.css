@@ -2,12 +2,13 @@
   font-family: 'Helvetica Neue', sans-serif;
 }
 
-#root, body, .App {
+html, #root, body, .App {
   min-width: 100vw;
   min-height: 100vh;
   margin: 0px;
   padding: 0px;
-  overflow-x: hidden; 
+  overflow-x: hidden;
+  overflow-y: hidden;
   /* display: flex; 
   align-items: center;
   justify-content: space-between; */
