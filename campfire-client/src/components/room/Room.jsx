@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
-// import axios from "axios";
 import Video from "./video/Video";
 import Sidebar from "./sidebar";
 import { io } from "socket.io-client";
@@ -43,6 +42,9 @@ export default function Room() {
 
   //State for current playing video index
   const [currentPlaying, setCurrentPlaying] = useState(null);
+
+  //Target video as ref
+  const videoRef = useRef();
 
   //Server location for socket connection
   const ENDPOINT = "ws://localhost:3002";
@@ -102,6 +104,16 @@ export default function Room() {
         }
       });
 
+      socket.on("VIDEO_CONTROLS", (control) => {
+        if (control.type === "play") {
+          play(false);
+        } else if (control.type === "pause") {
+          pause(false);
+        } else if (control.type === "sync") {
+          sync(false, control.time);
+        }
+      });
+
       return () => {
         socket.disconnect();
       };
@@ -157,6 +169,49 @@ export default function Room() {
     });
   };
 
+  //Reference the video on ready
+  const referenceVideo = (event) => {
+    videoRef.current = event.target;
+  };
+
+  //Play video function
+  const play = (isOrigin) => {
+    videoRef.current.playVideo();
+    if (isOrigin) {
+      socket.emit("VIDEO_CONTROLS", { url, type: "play" });
+    }
+  };
+
+  //Pause video function
+  const pause = (isOrigin) => {
+    videoRef.current.pauseVideo();
+    if (isOrigin) {
+      socket.emit("VIDEO_CONTROLS", { url, type: "pause" });
+    }
+  };
+
+  //Sync video function
+  const sync = (isOrigin, time) => {
+    if (!time) {
+      time = videoRef.current.getCurrentTime();
+    }
+    videoRef.current.seekTo(time, true);
+    if (isOrigin) {
+      socket.emit("VIDEO_CONTROLS", { url, type: "sync", time });
+    }
+  };
+
+  //Play next video
+  const upNext = () => {
+    let nextPlayListIndex = currentPlaying + 1;
+    if (!playList[nextPlayListIndex]) nextPlayListIndex = null;
+    socket.emit("PLAYLIST_CONTROLS", {
+      url,
+      type: "upNext",
+      index: nextPlayListIndex,
+    });
+  };
+
   return (
     <>
       <ThemeProvider theme={darkTheme} />
@@ -164,11 +219,12 @@ export default function Room() {
       <div className="container">
         <div className="video-player">
           <Video
-            socket={socket}
             playList={playList}
-            url={url}
             currentPlaying={currentPlaying}
-            setCurrentPlaying={setCurrentPlaying}
+            referenceVideo={referenceVideo}
+            play={play}
+            pause={pause}
+            upNext={upNext}
           />
         </div>
 
@@ -181,6 +237,7 @@ export default function Room() {
                 Users
                 </span>
               </div> */}
+              <button onClick={() => sync(true)}>sync</button>
               <button onClick={() => navigator.clipboard.writeText(url)}>
                 <LinkIcon className="userIcon" />
                 <span className="MuiTab-root">Copy Invite URL</span>
