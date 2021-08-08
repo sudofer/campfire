@@ -1,5 +1,7 @@
 import React from "react";
 import "./SearchItem.css";
+import AddIcon from '@material-ui/icons/Add';
+import IconButton from '@material-ui/core/IconButton';
 export default function SearchItem({ result, addPlayListItem }) {
   const style = {
     width: "90px",
@@ -7,15 +9,15 @@ export default function SearchItem({ result, addPlayListItem }) {
   };
   return (
     <li className="SearchItemBox">
-      <h5>{result.title}</h5>
+      <span className="MuiTab-root">{result.title}</span>
       <img style={style} src={result.thumbnails.default.url} alt={result.description}></img>
-      <button
+      <IconButton 
         onClick={() => {
           addPlayListItem(result);
         }}
       >
-        +
-      </button>
+        <AddIcon/>
+      </IconButton>
     </li>
   );
 }

@@ -99,7 +99,7 @@ export default function Home() {
     <>
 
     {/* video background */}
-    <div id="frontPageContainer">
+    <div class="frontPageContainer">
     <div class="video-background">
       <div class="video-foreground">
         <iframe title="intentionally_blank" aria-hidden="true" src="https://www.youtube.com/embed/NUKKzdVy0EI?controls=0&showinfo=0&rel=0&autoplay=1&loop=1&playlist=NUKKzdVy0EI&mute=1" allow='autoplay' volume='0' frameborder="0" allowfullscreen/>
