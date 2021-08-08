@@ -18,10 +18,10 @@ export default function Video({
       setVideoUrl("");
     } else {
       if (playList[currentPlaying] && playList[currentPlaying].link) {
-        const newVideoUrl = playList[currentPlaying].link
-          .split("v=")[1]
-          .split("&")[0];
-        if (videoUrl !== newVideoUrl) {
+        const newVideoUrl = playList[currentPlaying]?.link
+          .split("v=")?.[1]
+          .split("&")?.[0];
+        if (newVideoUrl && videoUrl !== newVideoUrl) {
           setVideoUrl(newVideoUrl);
         }
       }
