@@ -3,8 +3,6 @@ import PlayListItem from "./PlaylistItem";
 
 export default function PlaylistBox({
   playList,
-  setPlayList,
-  setCurrentPlaying,
   emitChosenOne,
   removeFromPlayList,
 }) {
@@ -16,11 +14,8 @@ export default function PlaylistBox({
     return (
       <PlayListItem
         key={id}
-        playList={playList}
         playListItem={item}
-        setPlayList={setPlayList}
         index={index}
-        setCurrentPlaying={setCurrentPlaying}
         emitChosenOne={emitChosenOne}
         removeFromPlayList={removeFromPlayList}
       />
