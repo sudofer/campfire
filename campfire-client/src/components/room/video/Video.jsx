@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import YouTube from "react-youtube";
+import './Video.css'
 export default function Video({
   socket,
   playList,
@@ -86,8 +87,8 @@ export default function Video({
 
   let opts = {
     classname: 'player',
-    height: "810", //225
-    width: "1440", //400
+    height: "780", //225
+    width: "1410", //400
     playerVars: {
       // https://developers.google.com/youtube/player_parameters
       start: 0,
@@ -96,8 +97,9 @@ export default function Video({
 
   return (
     <>
-      <div id="player">
+      <div class="player">
         <YouTube
+          className='youtubePlayer'
           onReady={referenceVideo}
           videoId={videoUrl}
           opts={opts}

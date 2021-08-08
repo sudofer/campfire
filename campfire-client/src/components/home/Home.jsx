@@ -116,9 +116,6 @@ export default function Home() {
             />
           </div>
         </div>
-
-        {/* front page grid */}
-
         <div id="frontPageBody">
           <div className="pageTitle">
             <h1>Join your friends around the campfire.</h1>
