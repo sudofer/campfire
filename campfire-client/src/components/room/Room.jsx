@@ -54,7 +54,7 @@ export default function Room() {
   const [playList, setPlayList] = useState([]);
 
   //State for current playing video index
-  const [currentPlaying, setCurrentPlaying] = useState(0);
+  const [currentPlaying, setCurrentPlaying] = useState(null);
 
   //Server location for socket connection
   const ENDPOINT = "ws://localhost:3002";
@@ -79,7 +79,6 @@ export default function Room() {
 
       socket.on("USER_ALREADY_EXIST", ({ error }) => {
         alert(error);
-        console.log(error);
         history.push("/");
       });
 
@@ -97,11 +96,11 @@ export default function Room() {
       });
 
       socket.on("ADD_USER_DATA", ({ users }) => {
-        setRoomUsers((prev) => [...users]);
+        setRoomUsers([...users]);
       });
 
       socket.on("DELETE_USER_DATA", ({ users }) => {
-        setRoomUsers((prev) => [...users]);
+        setRoomUsers([...users]);
       });
 
       socket.on("PLAYLIST_CONTROLS", ({ type, index, newPlayList }) => {
@@ -110,11 +109,8 @@ export default function Room() {
         } else if (type === "chosenOne") {
           setCurrentPlaying(index);
         } else if (type === "DELETE_ITEM") {
-          if (currentPlaying !== index) {
-            setCurrentPlaying(index);
-          }
-          setPlayList((prev) => [...newPlayList]);
-          console.log(playList);
+          setCurrentPlaying(index);
+          setPlayList([...newPlayList]);
         }
       });
 
@@ -122,7 +118,7 @@ export default function Room() {
         socket.disconnect();
       };
     }
-  }, [socket, history]);
+  }, [socket]);
 
   //Function for sending message
   const sendMessage = (event) => {
@@ -157,7 +153,6 @@ export default function Room() {
 
   //Remove item from playlist
   const removeFromPlayList = (index) => {
-    console.log("CLICKLCICKCLICK", index);
     socket.emit("PLAYLIST_CONTROLS", {
       url,
       type: "DELETE_ITEM",
@@ -167,8 +162,6 @@ export default function Room() {
 
   //Choose video from list
   const emitChosenOne = (index) => {
-    console.log("IM THE CHOSEN ONE");
-    console.log("aaa", index);
     socket.emit("PLAYLIST_CONTROLS", {
       url,
       type: "chosenOne",
@@ -180,14 +173,9 @@ export default function Room() {
     <>
       <div className="container">
         <div className="video-player">
-          {/* <img
-            src="https://github.com/htkim94/campfire/blob/main/campfire-client/public/docs/yt_image.png?raw=true"
-            alt="youtube screenshot"
-          /> */}
           <Video
             socket={socket}
             playList={playList}
-            setPlayList={setPlayList}
             url={url}
             currentPlaying={currentPlaying}
             setCurrentPlaying={setCurrentPlaying}
@@ -206,7 +194,6 @@ export default function Room() {
             addPlayListItem={addPlayListItem}
             playList={playList}
             name={name}
-            setPlayList={setPlayList}
             message={message}
             messages={messages}
             setMessage={setMessage}

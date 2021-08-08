@@ -7,7 +7,6 @@ const {
   checkExistingUser,
   removeUser,
   getUser,
-  getUsersInRoom,
   getRoomById,
   getRoomByUrl,
   getRoomIndex,
@@ -29,8 +28,6 @@ const io = require("socket.io")(server, {
 });
 
 io.on("connection", (socket) => {
-  console.log(`socket connection alive on id ${socket.id}`);
-
   socket.on("CREATE_ROOM", ({ name, url }) => {
     const trimmedName = name.trim().toLowerCase();
     const user = { id: socket.id, name: trimmedName };
@@ -63,7 +60,6 @@ io.on("connection", (socket) => {
         socket.emit("USER_ALREADY_EXIST", { error: "USERNAME ALREADY EXIST" });
       }
     }
-    console.log(data);
   });
 
   socket.on("SEND_MESSAGE", ({ message, url }) => {
@@ -73,23 +69,7 @@ io.on("connection", (socket) => {
       user: user.name,
       text: message,
     });
-    // io.to(user.url).emit("roomData", {
-    //   room: user.name,
-    //   users: getUsersInRoom(user.room),
-    // });
-    // callback();
   });
-
-  //Send User Data
-  // let roomURL;
-  // socket.on("DATA", ({ url }) => {
-  //   const room = getRoomByUrl(data, url);
-  //   const user = getUser(room.users, socket.id);
-  //   io.to(room.url).emit("DATA", { users: getUsersInRoom(user.room) });
-  // });
-
-  // const sendUserDataToRoom = (url) => {};
-  // sendUserDataToRoom(roomURL);
 
   socket.on("NEW_PLAY_LIST_ITEM", ({ url, title, link, thumbnails, id }) => {
     const roomIndex = getRoomIndex(data, url);
@@ -107,16 +87,10 @@ io.on("connection", (socket) => {
       data[roomIndex].currentPlaying = index;
       io.in(url).emit("PLAYLIST_CONTROLS", { type, index });
     } else if (type === "DELETE_ITEM") {
-      console.log("server got delete item message");
       data[roomIndex].playList.splice(index, 1);
-      const currentPlaying = data[roomIndex].currentPlaying;
-      if (!data[roomIndex].playList[currentPlaying]) {
-        data[roomIndex].currentPlaying--;
-      }
-      console.log(data[roomIndex].playList, "PLAYLIST PLAYLIST");
       io.in(url).emit("PLAYLIST_CONTROLS", {
         type,
-        index: data[roomIndex].currentPlaying,
+        index: null,
         newPlayList: data[roomIndex].playList,
       });
     }
@@ -151,8 +125,6 @@ io.on("connection", (socket) => {
 
       socket.leave(room.url);
     }
-    console.log(data);
-    console.log("socket has disconnected!!");
   });
 });
 
