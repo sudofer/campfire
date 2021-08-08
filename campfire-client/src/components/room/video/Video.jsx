@@ -3,15 +3,11 @@ import YouTube from "react-youtube";
 export default function Video({
   socket,
   playList,
-  setPlayList,
   url,
   currentPlaying,
-  setCurrentPlaying,
 }) {
   //Current videoURL of playlist
   const [videoUrl, setVideoUrl] = useState("");
-  console.log("video URL", videoUrl);
-  console.log("socket id", socket && socket.id);
 
   //Ref??
   const videoRef = useRef();
@@ -20,14 +16,6 @@ export default function Video({
   useEffect(() => {
     if (playList.length === 0) {
       setVideoUrl("");
-      // } else if (playList.length === 1) {
-      //   if (playList[0]) {
-      //     const newVideoUrl = playList[0].link.split("v=")[1].split("&")[0];
-      //     if (videoUrl !== newVideoUrl) {
-      //       setVideoUrl(newVideoUrl);
-      //     }
-      //   }
-      // }
     } else {
       if (playList[currentPlaying] && playList[currentPlaying].link) {
         const newVideoUrl = playList[currentPlaying].link
@@ -38,15 +26,11 @@ export default function Video({
         }
       }
     }
-  }, [currentPlaying, playList, videoUrl]);
+  }, [currentPlaying]);
 
   //Reference the video on ready
   const referenceVideo = (event) => {
     videoRef.current = event.target;
-    // videoRef.current.addEventListener("onclick", onClick);
-    // console.log("________________________________", videoRef.current);
-    // const iFrame = videoRef.current.getIframe();
-    // iFrame.onclick =(console.log);
   };
 
   //Play video function
@@ -76,40 +60,16 @@ export default function Video({
     }
   };
 
-  //Seek video function
-  // const syncTime = (isOrigin, time) => {
-  //   if (!time) {
-  //     time = videoRef.current.getCurrentTime();
-  //   }
-  //   if (isOrigin) {
-  //     socket.emit("VIDEO_CONTROLS", { url, type: "syncTime", time });
-  //   }
-  //   videoRef.current.playVideo();
-  // };
-
-  //Clear playlist on end and play next
+  //Play next video
   const upNext = () => {
-    // setPlayList((prev) => [...prev.slice(1)]);
-    const nextPlayListIndex = currentPlaying + 1;
+    let nextPlayListIndex = currentPlaying + 1;
+    if (!playList[nextPlayListIndex]) nextPlayListIndex = null;
     socket.emit("PLAYLIST_CONTROLS", {
       url,
       type: "upNext",
-      nextPlayListIndex,
+      index: nextPlayListIndex,
     });
   };
-
-  // const checkElapsedTime = (e) => {
-  //   const duration = e.target.getDuration();
-  //   const currentTime = e.target.getCurrentTime();
-  //   if (currentTime / duration > 0.95) {
-  //     console.log("working...");
-  //   }
-  // };
-  // const [currentPos, setCurrentPos] = useState(0);
-
-  // const end = () => {
-  //   console.log("END FUNCTION");
-  // };
 
   useEffect(() => {
     socket &&
@@ -120,18 +80,16 @@ export default function Video({
           pause(false);
         } else if (control.type === "sync") {
           sync(false, control.time);
-          // } else if (control.type === "syncTime") {
-          //   videoRef.current.seekTo(control.time);
         }
       });
   }, [socket]);
 
   let opts = {
-    height: "225", //810
-    width: "400", //1440
+    classname: 'player',
+    height: "810", //225
+    width: "1440", //400
     playerVars: {
       // https://developers.google.com/youtube/player_parameters
-      // autoplay: 1,
       start: 0,
     },
   };
@@ -139,7 +97,6 @@ export default function Video({
   return (
     <>
       <div id="player">
-        {/* <input value={videoUrl} onChange={(e) => setVideoUrl(e.target.value)} /> */}
         <YouTube
           onReady={referenceVideo}
           videoId={videoUrl}
@@ -148,7 +105,6 @@ export default function Video({
           onPause={() => pause(true)}
           onEnd={() => upNext()}
           onStateChange={(event) => {
-            console.log(event.data);
             if (event.data === -1) event.target.playVideo();
           }}
         />

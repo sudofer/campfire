@@ -9,7 +9,7 @@ export default function Chatbox(props) {
   return (
     <div className="outerContainer">
       <div className="insideContainer">
-        <MessageList messages={messages} name={name} />
+        <MessageList messages={messages} name={name}/>
         <MessageInput
           message={message}
           setMessage={setMessage}

@@ -1,25 +1,16 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import {
-  Button,
-  TextField,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import { createTheme, ThemeProvider } from "@material-ui/core/styles";
-import { Container } from "@material-ui/core"; // this must be imported last
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import SubscriptionsOutlinedIcon from "@material-ui/icons/SubscriptionsOutlined";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import ScreenShareIcon from "@material-ui/icons/ScreenShare";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import "./Home.css";
+import { useHistory } from 'react-router-dom';
+import { Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@material-ui/core";
+import { makeStyles } from '@material-ui/core/styles';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+import {Container} from '@material-ui/core'; // this must be imported last
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import SubscriptionsOutlinedIcon from '@material-ui/icons/SubscriptionsOutlined';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import ScreenShareIcon from '@material-ui/icons/ScreenShare';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import './Home.css';
 
 export default function Home() {
   const [url, setUrl] = useState("");
@@ -99,7 +90,10 @@ export default function Home() {
   // dialog pop up boxes set to dark mode
   const darkTheme = createTheme({
     palette: {
-      type: "dark",
+      type: 'dark',
+      primary: {
+        main: '#ffffff',
+      },
     },
   });
 
@@ -186,7 +180,7 @@ export default function Home() {
 
           <ThemeProvider theme={darkTheme}>
             <CssBaseline />
-
+            
             <div className="roomButtons">
               {/* Create Room button */}
               <div className="create-room">

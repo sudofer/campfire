@@ -6,7 +6,6 @@ export default function SearchInput({ setSearchTerm }) {
     event.preventDefault();
     setSearchTerm(val);
     setVal("");
-    //event.target.value = "";
   };
 
   function handleChange(evt) {

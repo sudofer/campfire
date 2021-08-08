@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { Button, AppBar, Toolbar, Typography } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core";
 import "./Navbar.css";
-import { blueGrey } from "@material-ui/core/colors";
 
 const useStyles = makeStyles(() => ({
   header: {
@@ -25,6 +24,7 @@ const useStyles = makeStyles(() => ({
     fontWeight: 700,
     fontSize: '20px',
     marginLeft: "38px",
+    color: '#FFFFFF'
   },
   toolbar: {
     display: "flex",
@@ -40,10 +40,6 @@ const headersData = [
   {
     label: "About",
     href: "/about",
-  },
-  {
-    label: "Room",
-    href: "/room",
   },
 ];
 
@@ -87,18 +83,8 @@ export default function Navbar() {
                      
   return (
     <>
-      <AppBar position="fixed" className={header}>{displayDesktop()}</AppBar>
-      <Toolbar />
+      <AppBar position="sticky" className={header}>{displayDesktop()}</AppBar>
+      {/* <Toolbar /> */}
     </>
   );
 }
-
-{/* <AppBar position="sticky">
-<Toolbar>
-    <Link to="/">CAMPFIRE</Link>
-    <Link to="/">Home</Link>
-    <Link to="/about">About</Link>
-    <Link to="/room">Room</Link>
-</Toolbar>
-</AppBar>
-<div className={classes.offset} /> */}

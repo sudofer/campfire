@@ -5,33 +5,22 @@ import Video from "./video/Video";
 import Sidebar from "./sidebar";
 import { io } from "socket.io-client";
 import search from "youtube-search";
-// import { sizing } from '@material-ui/system';
-// import Container from '@material-ui/core/Container';
+import LinkIcon from '@material-ui/icons/Link';
+import MusicVideoIcon from '@material-ui/icons/MusicVideo';
+import { createTheme, ThemeProvider } from "@material-ui/core/styles";
+
 import "./Room.css";
 
 export default function Room() {
-  // const useStyles = makeStyles(theme => ({
-  //   container: {
-  //     height: '100%',
-  //     width: '100%',
-  //     display: 'flex',
-  //     flexDirection: 'row',
-  //     alignItems: 'flex-start',
-  //     border: '1px solid black',
-  //     borderRadius: '5px',
-  //     textAlign: 'center',
-  //   },
-  //   videoPlayer: {
-  //     width: '70%',
-  //   },
-  //   sideBarNav: {
-  //     width: '30%',
-  //   },
-  //   img: {
-  //     height: '65%',
-  //     width: '65%',
-  //   }
-  // }));
+
+  const darkTheme = createTheme({
+    palette: {
+      type: 'dark',
+      primary: {
+        main: '#ffffff',
+      },
+    },
+  });
 
   //State for users in a room
   const [roomUsers, setRoomUsers] = useState([]);
@@ -54,7 +43,7 @@ export default function Room() {
   const [playList, setPlayList] = useState([]);
 
   //State for current playing video index
-  const [currentPlaying, setCurrentPlaying] = useState(0);
+  const [currentPlaying, setCurrentPlaying] = useState(null);
 
   //Server location for socket connection
   const ENDPOINT = "ws://localhost:3002";
@@ -79,7 +68,6 @@ export default function Room() {
 
       socket.on("USER_ALREADY_EXIST", ({ error }) => {
         alert(error);
-        console.log(error);
         history.push("/");
       });
 
@@ -97,11 +85,11 @@ export default function Room() {
       });
 
       socket.on("ADD_USER_DATA", ({ users }) => {
-        setRoomUsers((prev) => [...users]);
+        setRoomUsers([...users]);
       });
 
       socket.on("DELETE_USER_DATA", ({ users }) => {
-        setRoomUsers((prev) => [...users]);
+        setRoomUsers([...users]);
       });
 
       socket.on("PLAYLIST_CONTROLS", ({ type, index, newPlayList }) => {
@@ -110,11 +98,8 @@ export default function Room() {
         } else if (type === "chosenOne") {
           setCurrentPlaying(index);
         } else if (type === "DELETE_ITEM") {
-          if (currentPlaying !== index) {
-            setCurrentPlaying(index);
-          }
-          setPlayList((prev) => [...newPlayList]);
-          console.log(playList);
+          setCurrentPlaying(index);
+          setPlayList([...newPlayList]);
         }
       });
 
@@ -122,7 +107,7 @@ export default function Room() {
         socket.disconnect();
       };
     }
-  }, [socket, history]);
+  }, [socket]);
 
   //Function for sending message
   const sendMessage = (event) => {
@@ -157,7 +142,6 @@ export default function Room() {
 
   //Remove item from playlist
   const removeFromPlayList = (index) => {
-    console.log("CLICKLCICKCLICK", index);
     socket.emit("PLAYLIST_CONTROLS", {
       url,
       type: "DELETE_ITEM",
@@ -167,8 +151,6 @@ export default function Room() {
 
   //Choose video from list
   const emitChosenOne = (index) => {
-    console.log("IM THE CHOSEN ONE");
-    console.log("aaa", index);
     socket.emit("PLAYLIST_CONTROLS", {
       url,
       type: "chosenOne",
@@ -178,31 +160,56 @@ export default function Room() {
 
   return (
     <>
+     <ThemeProvider theme={darkTheme}/> 
+
       <div className="container">
         <div className="video-player">
-          {/* <img
-            src="https://github.com/htkim94/campfire/blob/main/campfire-client/public/docs/yt_image.png?raw=true"
-            alt="youtube screenshot"
-          /> */}
           <Video
             socket={socket}
             playList={playList}
-            setPlayList={setPlayList}
             url={url}
             currentPlaying={currentPlaying}
             setCurrentPlaying={setCurrentPlaying}
           />
         </div>
-        <div>
-          {roomUsers.length !== 0 &&
-            roomUsers.map((user) => <l1>{user.name}</l1>)}
-        </div>
-        <div className="sideBarNav">
+
+        <div className="sideBarContainer">
+          <div className="usersInRoomContainer">
+            <div className="inviteTitle">
+              {/* <div>
+                <HomeIcon className="userIcon"/>
+                <span className="MuiTab-root">
+                Users
+                </span>
+              </div> */}
+              <div>
+                <LinkIcon className="userIcon"/>
+                <span className="MuiTab-root">
+                  Invite
+                </span>
+              </div>
+            </div>
+            {/* <div className="usersInRoomList">
+            {roomUsers.length !== 0 &&
+              roomUsers.map((user) => <li>{user.name}</li> )}
+            </div>*/}
+          </div> 
+
+          <div className="nowPlayingSection">
+              <MusicVideoIcon className="userIcon"/>
+              <span className="MuiTab-root">
+                Now Playing
+              </span>
+              <span className="nowPlayingVideoTitle">
+              Hello from the other side - Adele
+              </span>  
+
+          </div>
           <Sidebar
+            className='sideBar'
             addPlayListItem={addPlayListItem}
             playList={playList}
             name={name}
-            setPlayList={setPlayList}
             message={message}
             messages={messages}
             setMessage={setMessage}

@@ -2,9 +2,7 @@ import React from "react";
 
 export default function PlayListItem({
   playListItem,
-  playList,
   index,
-  setPlayList,
   emitChosenOne,
   removeFromPlayList,
 }) {
