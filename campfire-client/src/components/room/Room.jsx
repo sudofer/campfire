@@ -51,7 +51,8 @@ export default function Room() {
   const videoRef = useRef();
 
   //Server location for socket connection
-  const ENDPOINT = "ws://localhost:3002";
+  const ENDPOINT = "ws://campfire-server-a5ca1vecn-campfire.vercel.app";
+  // const ENDPOINT = "ws://localhost:3002";
 
   //Initialize socket
   useEffect(() => {
