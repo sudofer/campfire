@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import _ from "lodash";
 import { useHistory } from "react-router-dom";
 import Video from "./video/Video";
 import Sidebar from "./sidebar";
@@ -151,7 +152,8 @@ export default function Room() {
   //Add a search item to playlist
   const addPlayListItem = (playListItem) => {
     const { title, link, thumbnails, id } = playListItem;
-    socket.emit("NEW_PLAY_LIST_ITEM", { url, title, link, thumbnails, id });
+    console.log(_.unescape(title));
+    socket.emit("NEW_PLAY_LIST_ITEM", { url, title: _.unescape(title), link, thumbnails, id });
   };
 
   //Remove item from playlist

@@ -7,7 +7,7 @@ export default function UsersBox({ roomUsers }) {
       <div className="userList">
         {roomUsers.length !== 0 &&
           roomUsers.map((user) => (
-            <ul>
+            <ul key={user.id}>
               <li>{user.name}</li>
             </ul>
           ))}
