@@ -82,17 +82,6 @@ body {
   margin-left: 2%;
 }
 
-
-/* .inviteTitle {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  text-transform: uppercase;
-  font-family: 'Helvetica Neue';
-  padding: 0;
-  color: #ffffff;
-} */
-
 .userIcon {
   position: relative;
   top: 7px;
