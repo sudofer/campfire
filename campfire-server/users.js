@@ -1,14 +1,14 @@
 const adminChatWelcome = (socket, name) => {
   socket.emit("MESSAGE", {
     user: "admin",
-    text: `${name}, welcome to the chat!`,
+    text: `${name}, welcome to the campfire 🔥`,
   });
 };
 
 const adminChatJoin = (socket, room, name) => {
   socket.broadcast.to(room).emit("MESSAGE", {
     user: "admin",
-    text: `${name} has joined!`,
+    text: `${name} has joined the campfire 🔥`,
   });
 };
 

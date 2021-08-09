@@ -38,6 +38,7 @@ export default function Sidebar(props) {
         {value === 0 && (
           <Chatbox
             name={name}
+            roomUsers={roomUsers}
             message={message}
             messages={messages}
             setMessage={setMessage}

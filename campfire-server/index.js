@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const randomColor = require('randomcolor');
 
 const {
   adminChatJoin,
@@ -28,9 +29,9 @@ const io = require("socket.io")(server, {
 });
 
 io.on("connection", (socket) => {
-  socket.on("CREATE_ROOM", ({ name, url }) => {
+  socket.on("CREATE_ROOM", ({ name, url, color }) => {
     const trimmedName = name.trim().toLowerCase();
-    const user = { id: socket.id, name: trimmedName };
+    const user = { id: socket.id, name: trimmedName, color: randomColor({ luminosity: 'light', format: 'rgba', alpha: 0.4 }) };
 
     if (!getRoomByUrl(data, url)) {
       data.push({
@@ -68,6 +69,7 @@ io.on("connection", (socket) => {
     io.to(room.url).emit("MESSAGE", {
       user: user.name,
       text: message,
+      color: user.color,
     });
   });
 
@@ -114,7 +116,7 @@ io.on("connection", (socket) => {
         if (user) {
           io.to(room.url).emit("MESSAGE", {
             user: "admin",
-            text: `${user.name} has left the room.`,
+            text: `${user.name} has left the campfire 🏕`,
           });
         }
         removeUser(data[roomIndex].users, socket.id);

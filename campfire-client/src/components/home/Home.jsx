@@ -118,7 +118,7 @@ export default function Home() {
         </div>
         <div id="frontPageBody">
           <div className="pageTitle">
-            <h1>Join your friends around the campfire.</h1>
+            <h1 classNames='pgtitle'>Join your friends around the campfire.</h1>
           </div>
 
           <Container component="section" maxWidth="lg" className={classes.root}>
