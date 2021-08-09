@@ -1,6 +1,18 @@
 .userList {
-  font-size: 17px;
+  font-size: 22px;
   font-family: 'Helvetica Neue', sans-serif;
   font-weight: 300;
   ;
+}
+
+.swatch {
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  display: block;
+  text-indent: -1000px;
+  float: left;
+  overflow: hidden;
+  /* background: #000; */
+  margin: 0.2em 0.2em 0.2em 0.2em;
 }

@@ -6,8 +6,10 @@
 }
 
 #aboutPgTitle{ 
-  color: rgba(255,255,255,0.6);
-  text-shadow: 1.5px 1.5px 1.5px #fff;
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 500;
+  color: #ffffff;
+  letter-spacing: 0.1em;
 }
 
 body {
@@ -15,19 +17,28 @@ body {
 }
 
 #madeByTitle {
-  color: rgba(255,255,255,0.6);
+  color: rgba(255,255,255,0.8);
 }
 
 #madeByBody {
-  margin: 5%;
-  text-align: right;
+  /* text-align: right; */
+  position: absolute;
+  bottom: 3em;
+  right: 3em;
+  /* margin: 5em; */
+}
+
+#aboutPageText {
+  font-size: 1.5em;
+  margin-top: 3px;
+  margin-left: 3%;
 }
 
 a {
   text-transform: uppercase;
   font-size: smaller;
   font-weight: bold;
-  color: rgba(255,255,255,0.6);
+  color: rgba(255,255,255,0.7);
 
 }
 

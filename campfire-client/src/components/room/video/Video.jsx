@@ -31,8 +31,8 @@ export default function Video({
 
   let opts = {
     classname: "player",
-    height: "780", //225
-    width: "1410", //400
+    // height: "780", //225
+    // width: "1410", //400
     playerVars: {
       // https://developers.google.com/youtube/player_parameters
       start: 0,
@@ -55,7 +55,6 @@ export default function Video({
           }}
         />
       </div>
-      {/* <button onClick={() => sync(true)}>sync</button> */}
     </>
   );
 }
