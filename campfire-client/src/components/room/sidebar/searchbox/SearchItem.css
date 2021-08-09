@@ -42,12 +42,12 @@
 }
 
 .search-controls { 
+  margin-top: 3%;
+  margin-left: 6%;
   display: flex;
-  justify-content: center;
-  width: 80%;
+  width: 100%;
 }
 
 ul {
   width: 100%;
 }
-

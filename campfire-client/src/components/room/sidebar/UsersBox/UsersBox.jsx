@@ -1,13 +1,14 @@
 import React from "react";
+import './UsersBox.css'
 
 export default function UsersBox({ roomUsers }) {
   return (
     <>
-      <div>
+      <div className="userList">
         {roomUsers.length !== 0 &&
           roomUsers.map((user) => (
             <ul>
-              <l1>{user.name}</l1>
+              <li>{user.name}</li>
             </ul>
           ))}
       </div>

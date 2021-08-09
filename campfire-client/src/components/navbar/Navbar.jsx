@@ -7,8 +7,8 @@ import "./Navbar.css";
 const useStyles = makeStyles(() => ({
   header: {
     backgroundColor: "transparent",
-    paddingRight: "79px",
-    paddingLeft: "118px",
+    paddingRight: "50px",
+    paddingLeft: "50px",
     boxShadow: 'none',
   },
   logo: {
@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
     color: "#FFFEFE",
     textAlign: "left",
     fontSize: '30px',
-    letterSpacing: `3px`
+    letterSpacing: '3px'
   },
   menuButton: {
     fontFamily: "Open Sans, sans-serif",
