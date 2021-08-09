@@ -1,0 +1,36 @@
+#mainBody {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin: 5%;
+}
+
+#aboutPgTitle{ 
+  color: rgba(255,255,255,0.6);
+  text-shadow: 1.5px 1.5px 1.5px #fff;
+}
+
+body {
+  color: #FFFFFF;
+}
+
+#madeByTitle {
+  color: rgba(255,255,255,0.6);
+}
+
+#madeByBody {
+  margin: 5%;
+  text-align: right;
+}
+
+a {
+  text-transform: uppercase;
+  font-size: smaller;
+  font-weight: bold;
+  color: rgba(255,255,255,0.6);
+
+}
+
+a:hover{
+  color: #FFFFFF;
+}
