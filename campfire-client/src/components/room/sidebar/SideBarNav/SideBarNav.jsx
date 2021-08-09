@@ -1,13 +1,25 @@
 import React from "react";
-import { Paper, Tabs, Tab } from "@material-ui/core";
+import { Tabs, Tab } from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
 export default function SideBarNav({ value, handleChange }) {
+
+
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      tabPanel: {
+        backgroundColor: "rgba(1,1,1,0.1)",
+      }
+    }}));
+
+const classes = useStyles();
+
   return (
     <>
-      <Paper square>
         <Tabs
           value={value}
-          indicatorColor="secondary"
-          textColor="secondary"
+          classNames={classes.root}
+          indicatorColor="primary"
+          textColor="primary"
           onChange={handleChange}
         >
           <Tab label="Chat" />
@@ -15,7 +27,6 @@ export default function SideBarNav({ value, handleChange }) {
           <Tab label="Search" />
           <Tab label="Users" />
         </Tabs>
-      </Paper>
     </>
   );
 }

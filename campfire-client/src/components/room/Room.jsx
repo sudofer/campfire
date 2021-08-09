@@ -237,7 +237,7 @@ export default function Room() {
               <Button color="primary" onClick={() => sync(true)} startIcon={<SyncIcon/>}>Sync</Button>
             </div>
             <div>
-              <Button color="primary" onClick={() => navigator.clipboard.writeText(url)} startIcon={<LinkIcon/>}>
+              <Button color="secondary" onClick={() => navigator.clipboard.writeText(url)} startIcon={<LinkIcon/>}>
                 Copy Invite URL
               </Button>
             </div>
