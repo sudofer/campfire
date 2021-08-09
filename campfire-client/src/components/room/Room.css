@@ -43,7 +43,7 @@ body {
   height: 100%;
 }
 
-.usersInRoomContainer {
+.utilityContainer {
   list-style-type: none;
   border-left: 1px solid rgba(225, 225, 225, 0.2);
   border-bottom: 1px solid rgba(225, 225, 225, 0.2);
@@ -52,26 +52,12 @@ body {
   padding-top: 3%;
   padding-left: 3%;
   padding-right: 3%;
+  display: flex;
+  justify-content: space-between;
  }
 
-.inviteTitle {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  text-transform: uppercase;
-  font-family: 'Helvetica Neue';
-  padding: 0;
-  color: #ffffff;
-}
-
-.userIcon {
-  position: relative;
-  top: 7px;
-  left: 5px;
-}
-
 .nowPlayingSection {
-  padding-bottom: 3%;
+  padding-bottom: 5%;
   padding-top: 3%;
   padding-left: 3%;
   padding-right: 3%;
@@ -88,4 +74,27 @@ body {
 .nowPlayingVideoTitle {
   font-weight: 300;
   font-style: italic;
+}
+
+.nowNotPlayingVideoTitle {
+  font-weight: 300;
+  font-style: italic;
+  margin-left: 2%;
+}
+
+
+/* .inviteTitle {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  text-transform: uppercase;
+  font-family: 'Helvetica Neue';
+  padding: 0;
+  color: #ffffff;
+} */
+
+.userIcon {
+  position: relative;
+  top: 7px;
+  left: 5px;
 }

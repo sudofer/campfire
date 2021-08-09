@@ -1,4 +1,8 @@
 import React from "react";
+import PlayCircleFilledWhiteIcon from '@material-ui/icons/PlayCircleFilledWhite';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import IconButton from '@material-ui/core/IconButton';
+import '../searchbox/SearchItem.css'
 
 export default function PlayListItem({
   playListItem,
@@ -6,21 +10,24 @@ export default function PlayListItem({
   emitChosenOne,
   removeFromPlayList,
 }) {
-  const style = {
-    width: "90px",
-    height: "45px",
-  };
 
   return (
-    <li className="SearchItemBox">
-      <h5>{playListItem.title}</h5>
-      <img
-        style={style}
-        src={playListItem.thumbnails.default.url}
-        alt={playListItem.description}
-      ></img>
-      <button onClick={() => removeFromPlayList(index)}>-</button>
-      <button onClick={() => emitChosenOne(index)}>PLAY</button>
+    <li className="searchItemBox">
+      <div className="youtubeThumbnail">
+        <img
+          src={playListItem.thumbnails.default.url}
+          alt={playListItem.description}
+        />
+      </div>
+
+      <div className="playlistItemText">
+        {playListItem.title}
+      </div>
+
+      <div className="searchAndPlaylistButtons">        
+        <IconButton onClick={() => removeFromPlayList(index)}><DeleteForeverIcon size="large"/></IconButton>        
+        <IconButton onClick={() => emitChosenOne(index)}><PlayCircleFilledWhiteIcon size="large"/></IconButton>
+      </div>
     </li>
   );
 }

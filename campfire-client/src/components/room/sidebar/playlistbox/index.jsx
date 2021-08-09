@@ -1,15 +1,16 @@
 import React from "react";
 import PlayListItem from "./PlaylistItem";
+import "../searchbox/SearchItem.css"
 
-export default function PlaylistBox({
-  playList,
-  emitChosenOne,
-  removeFromPlayList,
-}) {
+
+export default function PlaylistBox({ playList, emitChosenOne, removeFromPlayList }) {
   const playListID = function () {
     return Math.random().toString(36).substr(2, 9);
   };
-  return playList.map((item, index) => {
+  return (
+    <div className="searchContainer">
+      <ul>
+    {playList.map((item, index) => {
     const id = playListID();
     return (
       <PlayListItem
@@ -20,5 +21,8 @@ export default function PlaylistBox({
         removeFromPlayList={removeFromPlayList}
       />
     );
-  });
+    })}
+    </ul>
+  </div>
+  )
 }
