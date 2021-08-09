@@ -6,7 +6,10 @@ import { io } from "socket.io-client";
 import search from "youtube-search";
 import LinkIcon from "@material-ui/icons/Link";
 import MusicVideoIcon from "@material-ui/icons/MusicVideo";
+import Button from '@material-ui/core/Button';
+import SyncIcon from '@material-ui/icons/Sync';
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";
+
 
 import "./Room.css";
 
@@ -134,7 +137,7 @@ export default function Room() {
   useEffect(() => {
     if (!searchTerm) return;
     const opts = {
-      maxResults: 1,
+      maxResults: 10,
       key: process.env.REACT_APP_KEY,
       part: "snippet",
     };
@@ -229,24 +232,15 @@ export default function Room() {
         </div>
 
         <div className="sideBarContainer">
-          <div className="usersInRoomContainer">
-            <div className="inviteTitle">
-              {/* <div>
-                <HomeIcon className="userIcon"/>
-                <span className="MuiTab-root">
-                Users
-                </span>
-              </div> */}
-              <button onClick={() => sync(true)}>sync</button>
-              <button onClick={() => navigator.clipboard.writeText(url)}>
-                <LinkIcon className="userIcon" />
-                <span className="MuiTab-root">Copy Invite URL</span>
-              </button>
+          <div className="utilityContainer">
+            <div>
+              <Button color="primary" onClick={() => sync(true)} startIcon={<SyncIcon/>}>Sync</Button>
             </div>
-            {/* <div className="usersInRoomList">
-            {roomUsers.length !== 0 &&
-              roomUsers.map((user) => <li>{user.name}</li> )}
-            </div>*/}
+            <div>
+              <Button color="primary" onClick={() => navigator.clipboard.writeText(url)} startIcon={<LinkIcon/>}>
+                Copy Invite URL
+              </Button>
+            </div>
           </div>
 
           <div className="nowPlayingSection">
@@ -259,7 +253,7 @@ export default function Room() {
                 </span>
               </>
             ) : (
-              <span></span>
+              <span className="nowNotPlayingVideoTitle">Start your campfire: search for a video to add to your playlist!</span>
             )}
           </div>
           <Sidebar
