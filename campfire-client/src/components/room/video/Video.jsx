@@ -18,7 +18,6 @@ export default function Video({
       setVideoUrl("");
     } else {
       if (playList[currentPlaying] && playList[currentPlaying].link && playList[currentPlaying].link.includes("v=")) {
-        console.log(playList[currentPlaying]);
         const newVideoUrl = playList[currentPlaying]?.link
           .split("v=")?.[1]
           .split("&")?.[0];
