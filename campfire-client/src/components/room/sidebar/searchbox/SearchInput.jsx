@@ -20,7 +20,7 @@ export default function SearchInput({ setSearchTerm }) {
       root: {
         backgroundColor: 'none',
         borderRadius: '10px',
-        border: '2px solid rgba(225, 225, 225, 0.2)',
+        border: '2px solid rgba(225, 225, 225, 0.3)',
         padding: '1px 3px',
         color: 'white',
         typography: {

@@ -21,8 +21,12 @@
   margin-bottom: 2%;
 }
 
-.youtubeThumbnail {
-  width: 20%;
+.searchYoutubeThumbnail {
+  width: 25%;
+}
+
+.playlistYoutubeThumbnail {
+  width: 30%;
 }
 
 .searchAndPlaylistButtons {

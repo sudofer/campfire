@@ -13,7 +13,7 @@ export default function PlayListItem({
 
   return (
     <li className="searchItemBox">
-      <div className="youtubeThumbnail">
+      <div className="playlistYoutubeThumbnail">
         <img
           src={playListItem.thumbnails.default.url}
           alt={playListItem.description}
@@ -25,8 +25,8 @@ export default function PlayListItem({
       </div>
 
       <div className="searchAndPlaylistButtons">        
-        <IconButton onClick={() => removeFromPlayList(index)}><DeleteForeverIcon size="large"/></IconButton>        
-        <IconButton onClick={() => emitChosenOne(index)}><PlayCircleFilledWhiteIcon size="large"/></IconButton>
+        <IconButton onClick={() => removeFromPlayList(index)}><DeleteForeverIcon style={{fontSize:"30px"}}/></IconButton>&nbsp;   
+        <IconButton onClick={() => emitChosenOne(index)}><PlayCircleFilledWhiteIcon style={{fontSize:"30px"}}/></IconButton>
       </div>
     </li>
   );

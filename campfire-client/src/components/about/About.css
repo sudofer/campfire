@@ -2,7 +2,8 @@
   display: flex;
   flex-direction: column;
   text-align: left;
-  margin: 5%;
+  margin-top: 3%;
+  margin-left: 5%;
 }
 
 #aboutPgTitle{ 
@@ -21,10 +22,12 @@ body {
 }
 
 #madeByBody {
-  /* text-align: right; */
+  text-align: right;
   position: absolute;
-  bottom: 3em;
-  right: 3em;
+  bottom: 0px;
+  right: 0px;
+  margin-bottom: 5%;
+  margin-right: 5%;
   /* margin: 5em; */
 }
 
@@ -34,9 +37,14 @@ body {
   margin-left: 3%;
 }
 
+.madeByName {
+  font-size: 1.5em;
+}
+
 a {
   text-transform: uppercase;
-  font-size: smaller;
+
+  font-size: medium;
   font-weight: bold;
   color: rgba(255,255,255,0.7);
 

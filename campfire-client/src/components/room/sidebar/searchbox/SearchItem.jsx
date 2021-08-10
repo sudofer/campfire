@@ -7,7 +7,7 @@ export default function SearchItem({ result, addPlayListItem }) {
 
   return (
     <li className="searchItemBox">
-      <div className="youtubeThumbnail">
+      <div className="searchYoutubeThumbnail">
         <img src={result.thumbnails.default.url} alt={result.description}/>
       </div>
 
@@ -16,7 +16,7 @@ export default function SearchItem({ result, addPlayListItem }) {
       </div>
 
       <div className="searchAndPlaylistButtons">
-        <IconButton onClick={() => {addPlayListItem(result);}}><AddIcon/></IconButton>
+        <IconButton onClick={() => {addPlayListItem(result);}}><AddIcon style={{fontSize:"30px"}}/></IconButton>
       </div>
     </li>
   );
