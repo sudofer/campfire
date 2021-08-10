@@ -3,6 +3,7 @@ import PlayCircleFilledWhiteIcon from '@material-ui/icons/PlayCircleFilledWhite'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import IconButton from '@material-ui/core/IconButton';
 import '../searchbox/SearchItem.css'
+import ReactTooltip from "react-tooltip";
 
 export default function PlayListItem({
   playListItem,
@@ -25,9 +26,17 @@ export default function PlayListItem({
       </div>
 
       <div className="searchAndPlaylistButtons">        
-        <IconButton onClick={() => removeFromPlayList(index)}><DeleteForeverIcon style={{fontSize:"30px"}}/></IconButton>&nbsp;   
-        <IconButton onClick={() => emitChosenOne(index)}><PlayCircleFilledWhiteIcon style={{fontSize:"30px"}}/></IconButton>
+        <IconButton data-tip data-for="deletedButton" data-event="click" onClick={() => removeFromPlayList(index)}><DeleteForeverIcon style={{fontSize:"30px"}}/></IconButton>&nbsp;   
+        <IconButton data-tip data-for="addedButton" data-event="click" onClick={() => emitChosenOne(index)}><PlayCircleFilledWhiteIcon style={{fontSize:"30px"}}/></IconButton>
       </div>
+
+      <ReactTooltip id='deletedButton' type='dark' afterShow={() => setTimeout(() => ReactTooltip.hide(), 700)}>
+        <span>Deleted!</span>
+      </ReactTooltip>
+
+      <ReactTooltip id='addedButton' type='dark' afterShow={() => setTimeout(() => ReactTooltip.hide(), 700)}>
+        <span>Added!</span>
+      </ReactTooltip>
     </li>
   );
 }

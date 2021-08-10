@@ -10,6 +10,8 @@ import MusicVideoIcon from "@material-ui/icons/MusicVideo";
 import Button from '@material-ui/core/Button';
 import SyncIcon from '@material-ui/icons/Sync';
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";
+import ReactTooltip from 'react-tooltip';
+
 
 
 import "./Room.css";
@@ -218,6 +220,7 @@ export default function Room() {
     });
   };
 
+
   return (
     <>
       <ThemeProvider theme={darkTheme} />
@@ -236,13 +239,22 @@ export default function Room() {
 
         <div className="sideBarContainer">
           <div className="utilityContainer">
+
             <div>
               <Button color="primary" onClick={() => sync(true)} startIcon={<SyncIcon/>}>Sync</Button>
             </div>
             <div>
-              <Button color="secondary" onClick={() => navigator.clipboard.writeText(url)} startIcon={<LinkIcon/>}>
+              <Button color="secondary" 
+                data-tip
+                data-for="copyURLButton"
+                data-event="click"
+                onClick={() => navigator.clipboard.writeText(url)} 
+                startIcon={<LinkIcon/>}>
                 Copy Invite URL
               </Button>
+              <ReactTooltip id='copyURLButton' type='dark' afterShow={() => setTimeout(() => ReactTooltip.hide(), 700)}>
+                <span>Copied!</span>
+              </ReactTooltip>
             </div>
           </div>
 
