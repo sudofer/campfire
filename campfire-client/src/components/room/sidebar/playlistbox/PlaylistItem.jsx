@@ -26,9 +26,11 @@ export default function PlayListItem({
       </div>
 
       <div className="searchAndPlaylistButtons">        
-        <IconButton data-tip data-for="deletedButton" data-event="click" onClick={() => removeFromPlayList(index)}><DeleteForeverIcon style={{fontSize:"30px"}}/></IconButton>&nbsp;   
-        <IconButton data-tip data-for="addedButton" data-event="click" onClick={() => emitChosenOne(index)}><PlayCircleFilledWhiteIcon style={{fontSize:"30px"}}/></IconButton>
+        <IconButton onClick={() => removeFromPlayList(index)}><DeleteForeverIcon style={{fontSize:"30px"}}/></IconButton>&nbsp;   
+        <IconButton onClick={() => emitChosenOne(index)}><PlayCircleFilledWhiteIcon style={{fontSize:"30px"}}/></IconButton>
       </div>
+
+      {/* data-tip data-for="addedButton" data-event="click" 
 
       <ReactTooltip id='deletedButton' type='dark' afterShow={() => setTimeout(() => ReactTooltip.hide(), 700)}>
         <span>Deleted!</span>
@@ -36,7 +38,7 @@ export default function PlayListItem({
 
       <ReactTooltip id='addedButton' type='dark' afterShow={() => setTimeout(() => ReactTooltip.hide(), 700)}>
         <span>Added!</span>
-      </ReactTooltip>
+      </ReactTooltip> */}
     </li>
   );
 }

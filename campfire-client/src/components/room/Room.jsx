@@ -248,11 +248,10 @@ export default function Room() {
                 data-tip
                 data-for="copyURLButton"
                 data-event="click"
-                onClick={() => navigator.clipboard.writeText(url)} 
                 startIcon={<LinkIcon/>}>
                 Copy Invite URL
               </Button>
-              <ReactTooltip id='copyURLButton' type='dark' afterShow={() => setTimeout(() => ReactTooltip.hide(), 700)}>
+              <ReactTooltip id='copyURLButton' type='dark' afterShow={() => { navigator.clipboard.writeText(url); setTimeout(() => ReactTooltip.hide(), 1000); }}>
                 <span>Copied!</span>
               </ReactTooltip>
             </div>

@@ -17,12 +17,15 @@ export default function SearchItem({ result, addPlayListItem }) {
       </div>
 
       <div className="searchAndPlaylistButtons">
-        <IconButton data-tip data-for="addedButton" data-event="click" onClick={() => {addPlayListItem(result);}}><AddIcon style={{fontSize:"30px"}}/></IconButton>
+        <IconButton onClick={() => {addPlayListItem(result);}}><AddIcon style={{fontSize:"30px"}}/></IconButton>
       </div>
 
+      {/* data-tip data-for="addedButton" data-event="click"
       <ReactTooltip id='addedButton' type='dark' afterShow={() => setTimeout(() => ReactTooltip.hide(), 700)}>
         <span>Added!</span>
-      </ReactTooltip>
+      </ReactTooltip> */}
+
+      
     </li>
   );
 }
