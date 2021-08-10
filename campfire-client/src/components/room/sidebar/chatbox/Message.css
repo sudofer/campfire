@@ -45,9 +45,8 @@
 
 /* MessageItem */
 .messageBox {
-  /* background: #F3F3F3; */
   border-radius: 18px;
-  padding: 1px 12px 1px;
+  padding: 1px 12px;
   color: white;
   display: inline-block;
   max-width: 80%;
